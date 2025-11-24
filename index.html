@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Golden VIP — Web Oficial</title>
+
+<!-- ====== Estilos ====== -->
+<style>
+  :root{
+    --gold: #D4AF37;
+    --accent: #b8362f;
+    --accent-2: #2b9af3;
+    --dark-bg: #070708;
+    --light-bg: #faf8f5;
+    --card: rgba(255,255,255,0.96);
+    --radius: 14px;
+    --container: 1100px;
+    --muted-dark: rgba(255,255,255,0.85);
+    --muted-light: rgba(0,0,0,0.65);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family: Inter, system-ui, Arial, sans-serif;
+    background: var(--light-bg); color:#111; -webkit-font-smoothing:antialiased;
+    transition: background .35s ease, color .25s ease;
+  }
+
+  .wrap{max-width:var(--container); margin:24px auto; padding:18px;}
+
+  header{display:flex;align-items:center;justify-content:space-between; gap:12px; position:relative;}
+
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img{width:72px;height:72px;border-radius:50%;object-fit:contain;background:#fff;padding:6px}
+  .brand h1{margin:0;font-size:20px}
+  .brand h1 span{color:var(--gold);font-weight:700}
+
+  nav{display:flex;gap:12px;align-items:center}
+  nav a{color:inherit;text-decoration:none;font-weight:600;padding:6px 10px;border-radius:8px}
+
+  /* HERO */
+  .hero{
+    display:grid;grid-template-columns:1fr;place-items:center;text-align:center;
+    padding:36px;border-radius:16px;
+    background: radial-gradient(900px 240px at 50% 20%, rgba(212,175,55,0.06), transparent),
+               linear-gradient(180deg, rgba(0,0,0,0.00), rgba(0,0,0,0.02));
+    margin:18px 0;
+  }
+
+  .hero .logo{
+    width:240px;height:240px;border-radius:50%;object-fit:contain;
+    padding:8px;background:#fff;box-shadow:0 18px 50px rgba(0,0,0,0.25)
+  }
+
+  .hero h2{margin:18px 0 8px;font-size:40px;letter-spacing:0.6px}
+  .hero h2 strong{color:var(--gold);font-weight:800}
+  .hero p{margin:0;color:var(--muted-light);max-width:720px}
+
+  .buttons{display:flex;gap:12px;justify-content:center;margin-top:18px}
+  .btn{padding:12px 26px;border-radius:40px;font-weight:800;text-decoration:none;display:inline-block}
+  .btn.primary{background:var(--accent);color:white;box-shadow:0 10px 30px rgba(184,54,47,0.12)}
+  .btn.gold{background:var(--gold);color:#111}
+
+  main{margin-top:8px}
+  .card{
+    background:var(--card);border-radius:var(--radius);
+    padding:20px;margin:16px 0;
+    box-shadow:0 10px 28px rgba(20,20,20,0.04)
+  }
+  h3{color:var(--gold);margin-top:0}
+  p.lead{color:var(--muted-light);line-height:1.5}
+
+  /* ===== TARJETAS GOLDEN VIP ===== */
+  .info-box{
+    padding:16px 14px 14px;
+    border-radius:14px;
+    background:linear-gradient(140deg, rgba(212,175,55,0.08), rgba(255,255,255,0.02));
+    border:1px solid rgba(212,175,55,0.30);
+    backdrop-filter: blur(4px);
+    position:relative;
+    box-shadow:0 0 0 rgba(212,175,55,0);
+    transition: all .32s ease;
+  }
+
+  .info-box::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:4px;
+    border-radius:14px 14px 0 0;
+    background:linear-gradient(90deg, #d4af37, #f8e9b0, #d4af37);
+    opacity:.9;
+  }
+
+  .info-box strong{
+    color:var(--gold);
+    font-size:18px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .info-box:hover{
+    transform:translateY(-5px) scale(1.02);
+    box-shadow:0 8px 25px rgba(212,175,55,0.28);
+    border-color:rgba(212,175,55,0.65);
+  }
+
+  .info-box p{
+    margin:8px 0 0;
+    line-height:1.45;
+    color:#333;
+    font-weight:500;
+  }
+
+  /* GALLERY GRID (original styles preserved) */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:12px}
+  .media{background:#0f0f0f;border-radius:12px;overflow:hidden;padding:6px;display:flex;align-items:center;justify-content:center}
+  .media img, .media video{width:100%;height:160px;object-fit:cover;border-radius:8px;display:block}
+
+  /* ===== SECCIÓN LÍDERES ===== */
+  .team{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+    margin-top:16px;
+  }
+
+  .member{
+    background:linear-gradient(135deg,rgba(212,175,55,0.15),rgba(0,0,0,0.65));
+    border:1px solid rgba(212,175,55,0.35);
+    border-radius:14px;
+    padding:16px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,0.45);
+    transition:.3s;
+  }
+  .member:hover{
+    transform:translateY(-6px);
+    box-shadow:0 14px 30px rgba(212,175,55,0.4);
+  }
+  .member img{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid var(--gold);
+    margin-bottom:10px;
+  }
+  .member h4{margin:0;font-size:18px;color:var(--gold)}
+  .member p{margin:4px 0 0;color:var(--muted-dark)}
+
+  /* ===== FORMULARIO ===== */
+  .form-card{
+    background:linear-gradient(145deg,rgba(212,175,55,0.10),rgba(0,0,0,0.65));
+    border:1px solid rgba(212,175,55,0.45);
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  form label{
+    color:var(--gold);
+    font-weight:600;
+  }
+
+  form input, form select, form textarea{
+    width:100%;
+    padding:12px;
+    margin:8px 0 16px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.15);
+    background:#0d0d0d;
+    color:white;
+  }
+
+  form button{
+    width:100%;
+    padding:14px;
+    background:var(--gold);
+    border:0;
+    border-radius:10px;
+    color:#111;
+    font-weight:800;
+    cursor:pointer;
+  }
+  form button:hover{background:#f5d77b}
+
+  /* ===== FOOTER ===== */
+  footer{
+    margin-top:40px;
+    padding:40px 20px;
+    background:#000;
+    border-top:2px solid var(--gold);
+    color:var(--gold);
+    text-align:center;
+  }
+  .footer-icons{display:flex;justify-content:center;gap:16px;margin-top:16px}
+  .footer-icons a{
+    color:var(--gold);font-size:26px;text-decoration:none;transition:.3s;
+  }
+  .footer-icons a:hover{color:white}
+
+  /* ===== MENU MÓVIL ===== */
+  .mobile-toggle{
+    display:none;
+    background:none;
+    border:0;
+    cursor:pointer;
+    font-size:30px;
+    color:var(--gold);
+  }
+
+  @media(max-width:760px){
+    nav{
+      display:none;
+      flex-direction:column;
+      background:#000;
+      position:absolute;
+      top:90px;
+      right:20px;
+      padding:16px;
+      border-radius:12px;
+      box-shadow:0 0 20px rgba(212,175,55,0.25);
+      width:180px;
+    }
+    nav.open{display:flex;}
+    .mobile-toggle{display:block;}
+  }
+
+  /* DARK THEME */
+  body.urban{
+    background:linear-gradient(180deg,#040405 0%, #050406 100%);
+    color:var(--muted-dark);
+  }
+
+  body.urban .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    box-shadow:0 12px 40px rgba(0,0,0,0.6)
+  }
+
+  body.urban .info-box{
+    background:linear-gradient(140deg, rgba(212,175,55,0.12), rgba(20,20,20,0.5));
+  }
+
+  body.urban .info-box p{
+    color:var(--muted-dark);
+  }
+
+  body.urban .info-box strong{
+    color:#f4d782;
+  }
+
+  @media(min-width:900px){
+    .hero{grid-template-columns: 1fr 1fr; text-align:left; gap:20px; align-items:center; padding:48px}
+    .hero .logo{width:320px;height:320px}
+  }
+
+  @media(max-width:540px){
+    .hero h2{font-size:24px}
+    .brand img{width:56px;height:56px}
+  }
+
+  /* gallery new styles */
+  #gallery {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  .media-item {
+    background: #0f0f0f;
+    padding: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.04);
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .media-item .thumb {
+    width:100%;
+    height:150px;
+    border-radius:8px;
+    object-fit:cover;
+    display:block;
+    background:#111;
+  }
+  .media-title {
+    text-align:center;
+    margin-top:8px;
+    font-size:14px;
+    color:white;
+    min-height:1.2em;
+  }
+  .media-actions{
+    display:flex;
+    gap:8px;
+    margin-top:8px;
+  }
+  .btn-small{
+    padding:8px;
+    border-radius:8px;
+    border:0;
+    cursor:pointer;
+    font-weight:700;
+  }
+  .btn-delete{ background:#b8362f; color:white; flex:1; }
+  .btn-view{ background:#222; color:var(--gold); flex:1; }
+
+  /* modal */
+  #titleModal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.75);
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+  }
+  #titleModal .box{
+    background:#111;
+    padding:18px;
+    border-radius:10px;
+    width:92%;
+    max-width:420px;
+    border:1px solid var(--gold);
+    color:white;
+  }
+  #titleModal input{ width:100%; padding:10px; border-radius:8px; border:1px solid #444; background:#000; color:#fff; margin-bottom:12px; }
+
+  .counter{
+    font-weight:700;
+    color:var(--muted-light);
+    margin-left:auto;
+    display:inline-block;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="wrap" role="document">
+
+  <!-- Header -->
+<header>
+  <div class="brand">
+    <img src="https://i.ibb.co/9kLqvRK0/image-removebg-preview.png" 
+         alt="Golden VIP Logo" 
+         style="cursor: default;"> 
+      <h1><span>Golden</span> VIP</h1>
+    </div>
+
+    <button class="mobile-toggle" id="mobileMenuBtn">☰</button>
+
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#about">Sobre Nosotros</a>
+      <a href="#team">Líderes</a>
+      <a href="#recruit">Reclutamiento</a>
+      <a href="#gallerySection">Galería</a>
+      <button id="themeToggle" style="margin-top:8px;padding:8px 10px;border-radius:8px;border:0;cursor:pointer">Modo Urbano</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+ <section id="inicio" class="hero">
+  <img src="https://i.ibb.co/Gv05Nhtp/image-removebg-preview-1.png"
+       alt="Golden VIP Banner"
+       style="cursor: default;">
+    <div class="hero-text">
+      <h2>Bienvenidos a <strong>Golden VIP</strong></h2>
+      <p class="lead">Comunidad de baile de Avakin Life e IMVU — retos, temáticas y premios VIP.</p>
+
+       <div class="buttons">
+        <a class="btn gold" href="#about">Sobre Nosotros</a>
+        <a id="joinBtn" class="btn primary" href="#" target="_blank">ÚNETE AL GRUPO</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE NOSOTROS -->
+  <section id="about" class="card">
+    <h3>¿Quiénes somos?</h3>
+    <p class="lead">Somos una comunidad de baile que destaca por creatividad, disciplina y estilo.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px">
+
+      <div class="info-box">
+        <strong>✨ Misión</strong>
+        <p>Inspirar a través del baile con temáticas únicas.</p>
+      </div>
+
+      <div class="info-box">
+        <strong>⭐ Valores</strong>
+        <p>Respeto · Creatividad · Disciplina · Lealtad</p>
+      </div>
+
+      <div class="info-box">
+        <strong>🔥 Qué hacemos</strong>
+        <p>Retos, insignias y presentaciones en el juego.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LÍDERES -->
+  <section id="team" class="card">
+    <h3>Líderes & Miembros Destacados</h3>
+    <p class="lead">Conoce al equipo principal de Golden VIP.</p>
+
+    <div class="team">
+      <div class="member">
+         <img src="https://i.ibb.co/2Yp9yTSJ/572046583-17894645382346722-7376055665485380813-n.jpg" alt="572046583-17894645382346722-7376055665485380813-n" border="0"> 
+        <h4>Ane</h4>
+        <p>Fundador</p>
+      </div>
+
+      <div class="member">
+        <img src="https://i.ibb.co/0RNp2kJG/574772452-17902908456322829-4909915829936062184-n.jpg" alt="574772452-17902908456322829-4909915829936062184-n" border="0">
+        <h4>Xina</h4>
+        <p>Fundador</p>
+      </div>
+
+      <div class="member">
+        <img src="https://i.ibb.co/5gwkp2sg/569279011-17924938857150409-2988309849469534930-n.jpg" alt="569279011-17924938857150409-2988309849469534930-n" border="0">
+        <h4>creathoor</h4>
+        <p>Fundador</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULARIO -->
+  <section id="recruit" class="card">
+    <h3>Formulario de Reclutamiento</h3>
+    <p class="lead">¿Quieres ser parte del equipo? Llena esto.</p>
+
+    <form action="https://formsubmit.co/anedilone27@gmail.com" method="POST">
+
+    <!-- Protección para evitar spam -->
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="box">
+    <input type="hidden" name="_subject" value="Nueva Solicitud de Golden VIP">
+    <input type="hidden" name="_autoresponse" value="Gracias por aplicar a Golden VIP. Hemos recibido tu solicitud.">
+
+    <label>Nombre del jugador</label>
+    <input type="text" name="nombre" required>
+
+    <label>Juego</label>
+    <select name="juego">
+      <option>Avakin Life</option>
+      <option>IMVU</option>
+    </select>
+
+    <label>Edad</label>
+    <input type="number" name="edad" min="13" required>
+
+    <label>¿Por qué quieres unirte?</label>
+    <textarea name="mensaje" rows="4"></textarea>
+
+    <button type="submit">Enviar Solicitud</button>
+</form>
+  </section>
+
+  <!-- ORIGINAL MEDIA GRID (kept) -->
+  <div class="grid" id="mediaGrid"></div>
+
+  <!-- GALERÍA (nueva integrada, respeta diseño) -->
+  <section id="gallerySection" class="card" style="padding:20px;">
+    <div style="display:flex;gap:12px;align-items:center;">
+      <h3 style="margin:0;color:var(--gold)">Galería — Golden VIP</h3>
+      <div class="counter" id="counter">📸 0 · 🎥 0</div>
+    </div>
+
+    <div style="display:flex;gap:12px;margin-top:12px;align-items:center;">
+      <button id="uploadBtn" style="padding:12px 18px;background:var(--gold);border:0;border-radius:10px;font-weight:800;cursor:pointer;">
+        + Subir Imagen / Video
+      </button>
+
+      <input type="file" id="fileInput" accept="image/*,video/*" style="display:none" />
+    </div>
+
+    <div id="gallery"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Golden VIP — Comunidad Oficial</p>
+
+    <div class="footer-icons">
+      <a href="https://instagram.com" target="_blank">📸</a>
+      <a href="https://tiktok.com" target="_blank">🎵</a>
+      <a href="https://youtube.com" target="_blank">▶️</a>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Modal título -->
+<div id="titleModal" aria-hidden="true">
+  <div class="box">
+    <h3 style="color:var(--gold); margin-top:0">Título del archivo</h3>
+    <input id="mediaTitleInput" type="text" placeholder="Escribe un título..." />
+    <div style="display:flex;gap:8px;">
+      <button id="confirmTitleBtn" class="btn-small" style="background:var(--gold);">Subir</button>
+      <button id="cancelTitleBtn" class="btn-small" style="background:#444;color:white;">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPT: integrado, sin top-level await -->
+<script>
+(function(){
+  // ============ CONFIG ============
+  const CLOUD_NAME = "dkwlzwvfg";
+  const UPLOAD_PRESET = "goldenvip_uploads";
+  const STORAGE_KEY = "goldenvip_gallery_v1";
+
+  // ============ SELECTORES ============
+  const uploadBtn = document.getElementById("uploadBtn");
+  const fileInput = document.getElementById("fileInput");
+  const gallery = document.getElementById("gallery");
+  const counterEl = document.getElementById("counter");
+  const refreshLocalBtn = document.getElementById("refreshLocalBtn");
+  const clearLocalBtn = document.getElementById("clearLocalBtn");
+
+  const titleModal = document.getElementById("titleModal");
+  const mediaTitleInput = document.getElementById("mediaTitleInput");
+  const confirmTitleBtn = document.getElementById("confirmTitleBtn");
+  const cancelTitleBtn = document.getElementById("cancelTitleBtn");
+
+  // Keep original small scripts working (menu, theme, populate)
+  // Tema oscuro/urbano
+  const themeBtn = document.getElementById('themeToggle');
+  if(themeBtn) themeBtn.addEventListener('click', ()=> {
+    const isUrban = document.body.classList.toggle('urban');
+    themeBtn.textContent = isUrban ? 'Modo Elegante' : 'Modo Urbano';
+  });
+
+  // Menú móvil
+  const mobileBtn = document.getElementById("mobileMenuBtn");
+  const nav = document.querySelector("nav");
+  if(mobileBtn && nav) mobileBtn.addEventListener("click", ()=> { nav.classList.toggle("open"); });
+
+  // populate original mediaGrid assets if present
+  const CONFIG = {
+    assets: [
+      "assets/logo.png",
+      "assets/hero-banner.png",
+      "assets/photo1.jpg",
+      "assets/photo2.jpg",
+      "assets/photo3.jpg"
+    ]
+  };
+  (async function populate(){
+    const grid = document.getElementById('mediaGrid');
+    if(!grid) return;
+    for(const p of CONFIG.assets.slice(2)){
+      try {
+        const r = await fetch(p, {method:'HEAD'});
+        if(r.ok){
+          const ext = p.split('.').pop().toLowerCase();
+          const wrap = document.createElement('div');
+          wrap.className = 'media';
+          if(['mp4','webm'].includes(ext)){
+            const v = document.createElement('video');
+            v.src = p; v.controls = true; wrap.appendChild(v);
+          } else {
+            const img = document.createElement('img');
+            img.src = p; wrap.appendChild(img);
+          }
+          grid.appendChild(wrap);
+        }
+      } catch(e){}
+    }
+  })();
+
+  // ============ STATE ============
+  let pendingFile = null; // archivo seleccionado antes de confirmar título
+  let galleryItems = [];  // { id, url, type, title, public_id? }
+
+  // ============ UTIL ============
+  function saveLocal() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(galleryItems)); } catch(e){ console.warn("No se pudo guardar localStorage:", e); }
+  }
+  function loadLocal() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      galleryItems = raw ? JSON.parse(raw) : [];
+    } catch(e){
+      console.error("Error leyendo localStorage:", e);
+      galleryItems = [];
+    }
+  }
+  function updateCounter(){
+    const images = galleryItems.filter(i=>i.type === "image").length;
+    const videos = galleryItems.filter(i=>i.type === "video").length;
+    counterEl.textContent = `📸 ${images} · 🎥 ${videos}`;
+  }
+
+  function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  // ============ RENDER ============
+  function renderGallery() {
+    gallery.innerHTML = "";
+    if (galleryItems.length === 0) {
+      gallery.innerHTML = `<p style="color:var(--muted-light);">No hay elementos. Sube archivos o carga desde local.</p>`;
+      updateCounter();
+      return;
+    }
+
+    // mostrar más recientes primero
+    galleryItems.slice().reverse().forEach(item => {
+      const div = document.createElement("div");
+      div.className = "media-item";
+      div.dataset.id = item.id;
+
+      // thumb
+      if (item.type === "video") {
+        div.innerHTML = `<video class="thumb" src="${item.url}" controls preload="metadata"></video>`;
+      } else {
+        div.innerHTML = `<img class="thumb" src="${item.url}" alt="${escapeHtml(item.title || '')}">`;
+      }
+
+      // title and actions container
+      const title = document.createElement("div");
+      title.className = "media-title";
+      title.textContent = item.title || "Sin título";
+
+      const actions = document.createElement("div");
+      actions.className = "media-actions";
+
+      const viewBtn = document.createElement("button");
+      viewBtn.className = "btn-small btn-view";
+      viewBtn.textContent = "Ver";
+      viewBtn.addEventListener("click", ()=> openLightbox(item));
+
+      const delBtn = document.createElement("button");
+      delBtn.className = "btn-small btn-delete";
+      delBtn.textContent = "Eliminar";
+      delBtn.addEventListener("click", ()=> deleteItem(item.id));
+
+      actions.appendChild(viewBtn);
+      actions.appendChild(delBtn);
+
+      div.appendChild(title);
+      div.appendChild(actions);
+
+      gallery.appendChild(div);
+    });
+
+    updateCounter();
+  }
+
+  // ============ LIGHTBOX (simple) ============
+  function openLightbox(item){
+    const overlay = document.createElement("div");
+    overlay.style = "position:fixed;inset:0;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:99999";
+    const box = document.createElement("div");
+    box.style = "max-width:90vw;max-height:90vh;";
+    if (item.type === "video") {
+      const v = document.createElement("video");
+      v.src = item.url; v.controls = true; v.autoplay = true; v.style = "width:100%;height:auto;max-height:90vh;display:block;border-radius:8px;";
+      box.appendChild(v);
+    } else {
+      const img = document.createElement("img");
+      img.src = item.url; img.style = "max-width:100%;max-height:90vh;border-radius:8px;display:block;";
+      box.appendChild(img);
+    }
+    const title = document.createElement("div");
+    title.textContent = item.title || ""; title.style = "color:white;text-align:center;margin-top:8px;";
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "Cerrar"; closeBtn.style = "display:block;margin:12px auto;padding:8px 12px;border-radius:8px;border:0;background:var(--gold);font-weight:700;cursor:pointer;";
+    closeBtn.addEventListener("click", ()=> document.body.removeChild(overlay));
+    overlay.appendChild(box);
+    overlay.appendChild(title);
+    overlay.appendChild(closeBtn);
+    overlay.addEventListener("click", (e)=> { if (e.target === overlay) document.body.removeChild(overlay); });
+    document.body.appendChild(overlay);
+  }
+
+  // ============ DELETE ============
+  function deleteItem(id) {
+    if (!confirm("¿Eliminar este elemento de la galería local? (No borra del servidor Cloudinary)")) return;
+    galleryItems = galleryItems.filter(i=>i.id !== id);
+    saveLocal();
+    renderGallery();
+  }
+
+  // ============ UPLOAD HANDLERS ============
+  uploadBtn.addEventListener("click", (e)=> {
+    e.preventDefault();
+    fileInput.click();
+  });
+
+  fileInput.addEventListener("change", (e)=> {
+    const file = fileInput.files[0];
+    if (!file) return;
+    pendingFile = file;
+    mediaTitleInput.value = "";
+    titleModal.style.display = "flex";
+    titleModal.setAttribute("aria-hidden","false");
+    mediaTitleInput.focus();
+  });
+
+  cancelTitleBtn.addEventListener("click", ()=> {
+    pendingFile = null;
+    fileInput.value = "";
+    titleModal.style.display = "none";
+    titleModal.setAttribute("aria-hidden","true");
+  });
+
+  confirmTitleBtn.addEventListener("click", async ()=> {
+    const title = (mediaTitleInput.value || "").trim() || "Sin título";
+    if (!pendingFile) {
+      alert("No hay archivo seleccionado.");
+      titleModal.style.display = "none";
+      titleModal.setAttribute("aria-hidden","true");
+      return;
+    }
+
+    // temporary preview
+    const tempId = "temp_" + Date.now();
+    const tempUrl = URL.createObjectURL(pendingFile);
+    const tempType = pendingFile.type.startsWith("video") ? "video" : "image";
+    galleryItems.push({ id: tempId, url: tempUrl, type: tempType, title, _temp:true });
+    renderGallery();
+
+    titleModal.style.display = "none";
+    titleModal.setAttribute("aria-hidden","true");
+
+    // upload
+    try {
+      const uploaded = await uploadToCloudinary(pendingFile);
+      if (uploaded && uploaded.secure_url) {
+        galleryItems = galleryItems.filter(i=>!i._temp);
+        const newItem = {
+          id: uploaded.public_id || ("id_"+Date.now()),
+          public_id: uploaded.public_id,
+          url: uploaded.secure_url,
+          type: (uploaded.resource_type === "video" || (uploaded.format && ["mp4","webm"].includes(uploaded.format))) ? "video" : "image",
+          title
+        };
+        galleryItems.push(newItem);
+        saveLocal();
+        renderGallery();
+        alert("Archivo subido correctamente ✅");
+      } else {
+        galleryItems = galleryItems.filter(i=>!i._temp);
+        renderGallery();
+        console.error("Upload failed response:", uploaded);
+        alert("Error al subir archivo. Revisa la consola.");
+      }
+    } catch(err) {
+      console.error("Error subiendo:", err);
+      galleryItems = galleryItems.filter(i=>!i._temp);
+      renderGallery();
+      alert("Error al subir (ver consola).");
+    } finally {
+      pendingFile = null;
+      fileInput.value = "";
+    }
+  });
+
+  async function uploadToCloudinary(file) {
+    const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("upload_preset", UPLOAD_PRESET);
+    // Optional: set folder or tags:
+    // fd.append("folder", "goldenvip_uploads");
+    // fd.append("tags", "goldenvip_uploads");
+    const res = await fetch(url, { method: "POST", body: fd });
+    return res.json();
+  }
+
+  // ============ LOCAL STORAGE CONTROLS ============
+  refreshLocalBtn.addEventListener("click", ()=> {
+    loadLocal();
+    renderGallery();
+    alert("Galería local cargada.");
+  });
+  // ============ INIT ============
+  function tryPreloadSample(){
+    const samplePath = "/mnt/data/Captura de pantalla 2025-11-23 111936.png";
+    fetch(samplePath, { method: "HEAD" }).then(r=>{
+      if (r.ok && !localStorage.getItem(STORAGE_KEY)) {
+        galleryItems.push({ id: "sample_local", url: samplePath, type: "image", title: "Imagen de ejemplo" });
+        saveLocal();
+      }
+    }).catch(()=>{/* ignore if not accessible */});
+  }
+
+  function init(){
+    tryPreloadSample();
+    loadLocal();
+    renderGallery();
+  }
+  init();
+
+})(); // IIFE end
+</script>
+</body>
+</html>
