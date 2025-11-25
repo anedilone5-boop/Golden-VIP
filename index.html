@@ -442,8 +442,6 @@
     </div>
   </section>
 
-  
-
   <!-- ORIGINAL MEDIA GRID (kept) -->
   <div class="grid" id="mediaGrid"></div>
 
@@ -493,44 +491,31 @@
   </div>
 </div>
 
-<!-- Admin modal (login / set password) -->
+<!-- Admin modal (simple) -->
 <div id="adminModal" aria-hidden="true">
   <div class="box">
     <h3 style="color:var(--gold); margin-top:0" id="adminModalTitle">Acceso Admin</h3>
 
-    <div id="adminSetSection" style="display:none;">
-      <p>Configura una contraseña de administrador (se guarda hasheada en tu navegador).</p>
-      <input type="password" id="setAdminPassword" placeholder="Nueva contraseña" />
-      <input type="password" id="setAdminPasswordConfirm" placeholder="Confirmar contraseña" />
-      <div style="display:flex;gap:8px;">
-        <button id="setAdminBtn" class="btn-small" style="background:var(--gold);">Guardar</button>
-        <button id="cancelAdminSetBtn" class="btn-small" style="background:#444;color:white;">Cancelar</button>
-      </div>
-    </div>
-
-    <div id="adminLoginSection" style="display:none;">
+    <div id="adminLoginSection">
       <p>Introduce tu contraseña de administrador.</p>
       <input type="password" id="adminPassword" placeholder="Contraseña" />
       <div style="display:flex;gap:8px;">
         <button id="loginAdminBtn" class="btn-small" style="background:var(--gold);">Entrar</button>
         <button id="cancelAdminBtn" class="btn-small" style="background:#444;color:white;">Cancelar</button>
       </div>
-      <div style="margin-top:12px;color:#ccc;font-size:13px">Si olvidas la contraseña, elimina la clave <code>goldenvip_admin_hash</code> en el almacenamiento local del navegador y vuelve a configurar.</div>
+      <div style="margin-top:12px;color:#ccc;font-size:13px">La contraseña única es gestionada por el dueño del sitio.</div>
     </div>
 
   </div>
 </div>
 
-<!-- SCRIPT: integrado -->
+<!-- SCRIPT: simplificado admin único y subida Cloudinary -->
 <script>
-(function(){
+(async function(){
   // ============ CONFIG ============
   const CLOUD_NAME = "dkwlzwvfg";
   const UPLOAD_PRESET = "goldenvip_uploads";
   const STORAGE_KEY = "goldenvip_gallery_v1";
-  const ADMIN_HASH_KEY = "goldenvip_admin_hash";
-  const ADMIN_TOKEN_KEY = "goldenvip_admin_token";
-  const SHARED_JSON_PUBLIC_ID = "goldenvip_gallery"; // will be uploaded as raw -> accessible at /raw/upload/goldenvip_gallery.json
 
   // ============ SELECTORES ============
   const uploadBtn = document.getElementById("uploadBtn");
@@ -545,453 +530,136 @@
 
   const adminBtn = document.getElementById("adminBtn");
   const adminModal = document.getElementById("adminModal");
-  const adminModalTitle = document.getElementById("adminModalTitle");
-  const adminSetSection = document.getElementById("adminSetSection");
-  const adminLoginSection = document.getElementById("adminLoginSection");
-
-  const setAdminPasswordInput = document.getElementById("setAdminPassword");
-  const setAdminPasswordConfirmInput = document.getElementById("setAdminPasswordConfirm");
-  const setAdminBtn = document.getElementById("setAdminBtn");
-  const cancelAdminSetBtn = document.getElementById("cancelAdminSetBtn");
-
   const adminPasswordInput = document.getElementById("adminPassword");
   const loginAdminBtn = document.getElementById("loginAdminBtn");
   const cancelAdminBtn = document.getElementById("cancelAdminBtn");
 
-  // Keep original small scripts working (menu, theme, populate)
-  // Tema oscuro/urbano
-  const themeBtn = document.getElementById('themeToggle');
-  if(themeBtn) themeBtn.addEventListener('click', ()=> {
-    const isUrban = document.body.classList.toggle('urban');
-    themeBtn.textContent = isUrban ? 'Modo Elegante' : 'Modo Urbano';
-  });
-
-  // Menú móvil
-  const mobileBtn = document.getElementById("mobileMenuBtn");
-  const nav = document.querySelector("nav");
-  if(mobileBtn && nav) mobileBtn.addEventListener("click", ()=> { nav.classList.toggle("open"); });
-
-  // populate original mediaGrid assets if present
-  const CONFIG = {
-    assets: [
-      "assets/logo.png",
-      "assets/hero-banner.png",
-      "assets/photo1.jpg",
-      "assets/photo2.jpg",
-      "assets/photo3.jpg"
-    ]
-  };
-  (async function populate(){
-    const grid = document.getElementById('mediaGrid');
-    if(!grid) return;
-    for(const p of CONFIG.assets.slice(2)){
-      try {
-        const r = await fetch(p, {method:'HEAD'});
-        if(r.ok){
-          const ext = p.split('.').pop().toLowerCase();
-          const wrap = document.createElement('div');
-          wrap.className = 'media';
-          if(['mp4','webm'].includes(ext)){
-            const v = document.createElement('video');
-            v.src = p; v.controls = true; wrap.appendChild(v);
-          } else {
-            const img = document.createElement('img');
-            img.src = p; wrap.appendChild(img);
-          }
-          grid.appendChild(wrap);
-        }
-      } catch(e){}
-    }
-  })();
-
   // ============ STATE ============
-  let pendingFile = null; // archivo seleccionado antes de confirmar título
-  let galleryItems = [];  // { id, url, type, title, public_id? }
+  let pendingFile = null;
+  let galleryItems = [];
   let isAdmin = false;
 
   // ============ UTIL ============
-  function saveLocal() {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(galleryItems)); } catch(e){ console.warn("No se pudo guardar localStorage:", e); }
-  }
-  function loadLocal() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      galleryItems = raw ? JSON.parse(raw) : [];
-    } catch(e){
-      console.error("Error leyendo localStorage:", e);
-      galleryItems = [];
-    }
-  }
-  function updateCounter(){
-    const images = galleryItems.filter(i=>i.type === "image").length;
-    const videos = galleryItems.filter(i=>i.type === "video").length;
-    counterEl.textContent = `📸 ${images} · 🎥 ${videos}`;
-  }
-
-  function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function saveLocal(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(galleryItems)); }catch(e){console.warn(e);} }
+  function loadLocal(){ try{ const raw = localStorage.getItem(STORAGE_KEY); galleryItems = raw ? JSON.parse(raw) : []; }catch(e){ galleryItems = []; } }
+  function updateCounter(){ const images = galleryItems.filter(i=>i.type==='image').length; const videos = galleryItems.filter(i=>i.type==='video').length; counterEl.textContent = `📸 ${images} · 🎥 ${videos}`; }
+  function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
 
   // ============ RENDER ============
-  function renderGallery() {
+  function renderGallery(){
     gallery.innerHTML = "";
-    if (galleryItems.length === 0) {
-      gallery.innerHTML = `<p style="color:var(--muted-light);">No hay elementos. Sube archivos o carga desde local.</p>`;
-      updateCounter();
-      return;
-    }
-
-    // mostrar más recientes primero
-    galleryItems.slice().reverse().forEach(item => {
-      const div = document.createElement("div");
-      div.className = "media-item";
-      div.dataset.id = item.id;
-
-      // thumb
-      if (item.type === "video") {
-        div.innerHTML = `<video class="thumb" src="${item.url}" controls preload="metadata"></video>`;
-      } else {
-        div.innerHTML = `<img class="thumb" src="${item.url}" alt="${escapeHtml(item.title || '')}">`;
-      }
-
-      // title and actions container
-      const title = document.createElement("div");
-      title.className = "media-title";
-      title.textContent = item.title || "Sin título";
-
-      const actions = document.createElement("div");
-      actions.className = "media-actions";
-
-      const viewBtn = document.createElement("button");
-      viewBtn.className = "btn-small btn-view";
-      viewBtn.textContent = "Ver";
-      viewBtn.addEventListener("click", ()=> openLightbox(item));
-
-      const delBtn = document.createElement("button");
-      delBtn.className = "btn-small btn-delete";
-      delBtn.textContent = "Eliminar";
-      delBtn.addEventListener("click", ()=> deleteItem(item.id));
-
-      // Only show delete if admin logged in
-      if (isAdmin) {
+    if(!galleryItems.length){ gallery.innerHTML = `<p style="color:var(--muted-light);">No hay elementos. Sube archivos o carga desde local.</p>`; updateCounter(); return; }
+    galleryItems.slice().reverse().forEach(item=>{
+      const div = document.createElement("div"); div.className="media-item"; div.dataset.id = item.id;
+      if(item.type==='video'){ div.innerHTML = `<video class="thumb" src="${item.url}" controls preload="metadata"></video>`; } else { div.innerHTML = `<img class="thumb" src="${item.url}" alt="${escapeHtml(item.title||'')}">`; }
+      const title = document.createElement("div"); title.className="media-title"; title.textContent = item.title || "Sin título";
+      const actions = document.createElement("div"); actions.className="media-actions";
+      const viewBtn = document.createElement("button"); viewBtn.className="btn-small btn-view"; viewBtn.textContent="Ver"; viewBtn.addEventListener("click", ()=> openLightbox(item));
+      actions.appendChild(viewBtn);
+      if(isAdmin){
+        const delBtn = document.createElement("button"); delBtn.className="btn-small btn-delete"; delBtn.textContent="Eliminar"; delBtn.addEventListener("click", ()=> { if(confirm('Eliminar este elemento?')){ galleryItems = galleryItems.filter(i=>i.id!==item.id); saveLocal(); renderGallery(); } });
         actions.appendChild(delBtn);
       }
-
-      actions.appendChild(viewBtn);
-
-      div.appendChild(title);
-      div.appendChild(actions);
-
+      div.appendChild(title); div.appendChild(actions);
       gallery.appendChild(div);
     });
-
     updateCounter();
   }
 
-  // ============ LIGHTBOX (simple) ============
+  // ============ LIGHTBOX ============
   function openLightbox(item){
     const overlay = document.createElement("div");
     overlay.style = "position:fixed;inset:0;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:99999";
-    const box = document.createElement("div");
-    box.style = "max-width:90vw;max-height:90vh;";
-    if (item.type === "video") {
-      const v = document.createElement("video");
-      v.src = item.url; v.controls = true; v.autoplay = true; v.style = "width:100%;height:auto;max-height:90vh;display:block;border-radius:8px;";
-      box.appendChild(v);
-    } else {
-      const img = document.createElement("img");
-      img.src = item.url; img.style = "max-width:100%;max-height:90vh;border-radius:8px;display:block;";
-      box.appendChild(img);
-    }
-    const title = document.createElement("div");
-    title.textContent = item.title || ""; title.style = "color:white;text-align:center;margin-top:8px;";
-    const closeBtn = document.createElement("button");
-    closeBtn.textContent = "Cerrar"; closeBtn.style = "display:block;margin:12px auto;padding:8px 12px;border-radius:8px;border:0;background:var(--gold);font-weight:700;cursor:pointer;";
-    closeBtn.addEventListener("click", ()=> document.body.removeChild(overlay));
-    overlay.appendChild(box);
-    overlay.appendChild(title);
-    overlay.appendChild(closeBtn);
-    overlay.addEventListener("click", (e)=> { if (e.target === overlay) document.body.removeChild(overlay); });
+    const box = document.createElement("div"); box.style = "max-width:90vw;max-height:90vh;";
+    if(item.type==='video'){ const v=document.createElement('video'); v.src=item.url; v.controls=true; v.autoplay=true; v.style="width:100%;height:auto;max-height:90vh;display:block;border-radius:8px;"; box.appendChild(v); } else { const img=document.createElement('img'); img.src=item.url; img.style="max-width:100%;max-height:90vh;border-radius:8px;display:block;"; box.appendChild(img); }
+    const title = document.createElement("div"); title.textContent = item.title||""; title.style="color:white;text-align:center;margin-top:8px;";
+    const closeBtn = document.createElement("button"); closeBtn.textContent="Cerrar"; closeBtn.style="display:block;margin:12px auto;padding:8px 12px;border-radius:8px;border:0;background:var(--gold);font-weight:700;cursor:pointer;"; closeBtn.addEventListener("click", ()=> document.body.removeChild(overlay));
+    overlay.appendChild(box); overlay.appendChild(title); overlay.appendChild(closeBtn);
+    overlay.addEventListener("click",(e)=>{ if(e.target===overlay) document.body.removeChild(overlay); });
     document.body.appendChild(overlay);
   }
 
-  // ============ DELETE ============
-  function deleteItem(id) {
-    if (!isAdmin) { alert("Solo el administrador puede eliminar."); return; }
-    if (!confirm("¿Eliminar este elemento de la galería local y actualizar la lista compartida? (No borra de Cloudinary automáticamente)")) return;
-    galleryItems = galleryItems.filter(i=>i.id !== id);
-    saveLocal();
-    renderGallery();
-    // update shared JSON on Cloudinary
-    uploadGalleryJSON().catch(err=> console.warn("No se pudo actualizar gallery.json:", err));
-  }
+  // ============ UPLOAD FLOW ============
+  adminBtn.addEventListener("click", ()=>{ adminModal.style.display = "flex"; adminPasswordInput.value = ""; adminPasswordInput.focus(); });
+  cancelAdminBtn.addEventListener("click", ()=>{ adminModal.style.display = "none"; });
 
-  // ============ UPLOAD HANDLERS ============
-  uploadBtn.addEventListener("click", (e)=> {
-    e.preventDefault();
-    if (!isAdmin) return alert("Solo el administrador puede subir archivos. Pulsa 'Admin' para iniciar sesión.");
-    fileInput.click();
+  const ADMIN_PASSWORD = "Aneury00523"; // <-- contraseña fija
+
+  loginAdminBtn.addEventListener("click", ()=>{
+    const pass = adminPasswordInput.value.trim();
+    if(pass === ADMIN_PASSWORD){
+      isAdmin = true;
+      uploadBtn.classList.remove("disabled");
+      adminModal.style.display = "none";
+      alert("Acceso concedido");
+    } else {
+      alert("Contraseña incorrecta");
+    }
   });
 
-  fileInput.addEventListener("change", (e)=> {
+  uploadBtn.addEventListener("click", (e)=>{ e.preventDefault(); if(!isAdmin) return alert("Solo el administrador puede subir archivos."); fileInput.click(); });
+
+  fileInput.addEventListener("change", (e)=>{
     const file = fileInput.files[0];
-    if (!file) return;
+    if(!file) return;
     pendingFile = file;
     mediaTitleInput.value = "";
     titleModal.style.display = "flex";
-    titleModal.setAttribute("aria-hidden","false");
     mediaTitleInput.focus();
   });
 
-  cancelTitleBtn.addEventListener("click", ()=> {
-    pendingFile = null;
-    fileInput.value = "";
-    titleModal.style.display = "none";
-    titleModal.setAttribute("aria-hidden","true");
-  });
+  cancelTitleBtn.addEventListener("click", ()=>{ pendingFile = null; fileInput.value = ""; titleModal.style.display = "none"; });
 
-  confirmTitleBtn.addEventListener("click", async ()=> {
-    const title = (mediaTitleInput.value || "").trim() || "Sin título";
-    if (!pendingFile) {
-      alert("No hay archivo seleccionado.");
-      titleModal.style.display = "none";
-      titleModal.setAttribute("aria-hidden","true");
-      return;
-    }
-
-    // temporary preview
-    const tempId = "temp_" + Date.now();
+  confirmTitleBtn.addEventListener("click", async ()=>{
+    const title = (mediaTitleInput.value||"").trim() || "Sin título";
+    if(!pendingFile){ alert("No hay archivo seleccionado."); titleModal.style.display = "none"; return; }
+    // preview temp
+    const tempId = "temp_"+Date.now();
     const tempUrl = URL.createObjectURL(pendingFile);
     const tempType = pendingFile.type.startsWith("video") ? "video" : "image";
     galleryItems.push({ id: tempId, url: tempUrl, type: tempType, title, _temp:true });
     renderGallery();
-
     titleModal.style.display = "none";
-    titleModal.setAttribute("aria-hidden","true");
-
-    // upload
     try {
       const uploaded = await uploadToCloudinary(pendingFile);
-      if (uploaded && uploaded.secure_url) {
+      if(uploaded && uploaded.secure_url){
         galleryItems = galleryItems.filter(i=>!i._temp);
-        const newItem = {
-          id: uploaded.public_id || ("id_"+Date.now()),
-          public_id: uploaded.public_id,
-          url: uploaded.secure_url,
-          type: (uploaded.resource_type === "video" || (uploaded.format && ["mp4","webm"].includes(uploaded.format))) ? "video" : "image",
-          title
-        };
+        const newItem = { id: uploaded.public_id || ("id_"+Date.now()), url: uploaded.secure_url, type: (uploaded.resource_type==='video' || (uploaded.format && ['mp4','webm'].includes(uploaded.format))) ? 'video' : 'image', title };
         galleryItems.push(newItem);
         saveLocal();
         renderGallery();
         alert("Archivo subido correctamente ✅");
-        // upload shared JSON so others see the file
-        await uploadGalleryJSON();
       } else {
         galleryItems = galleryItems.filter(i=>!i._temp);
         renderGallery();
-        console.error("Upload failed response:", uploaded);
-        alert("Error al subir archivo. Revisa la consola.");
+        alert("Error al subir. Revisa la consola.");
+        console.error("Upload response:", uploaded);
       }
-    } catch(err) {
-      console.error("Error subiendo:", err);
+    } catch(err){
+      console.error("Upload error:", err);
       galleryItems = galleryItems.filter(i=>!i._temp);
       renderGallery();
       alert("Error al subir (ver consola).");
     } finally {
-      pendingFile = null;
-      fileInput.value = "";
+      pendingFile = null; fileInput.value = "";
     }
   });
 
-  async function uploadToCloudinary(file) {
+  async function uploadToCloudinary(file){
     const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
     const fd = new FormData();
     fd.append("file", file);
     fd.append("upload_preset", UPLOAD_PRESET);
-    // allow client to choose folder/public_id if needed:
-    // fd.append("folder","goldenvip_uploads");
     const res = await fetch(url, { method: "POST", body: fd });
     return res.json();
   }
 
-  // ============ SHARED gallery.json (raw) ============
-  async function uploadGalleryJSON(){
-    // create a Blob of the gallery items (we'll store only essential fields to keep file small)
-    const payload = galleryItems.map(i => ({
-      id: i.id,
-      public_id: i.public_id || null,
-      url: i.url,
-      type: i.type,
-      title: i.title
-    }));
-    const blob = new Blob([JSON.stringify(payload)], { type: "application/json" });
-    const fd = new FormData();
-    fd.append("file", blob, "gallery.json");
-    fd.append("upload_preset", UPLOAD_PRESET);
-    // upload as raw so we can fetch it from /raw/upload/<public_id>.json
-    fd.append("resource_type", "raw");
-    fd.append("public_id", SHARED_JSON_PUBLIC_ID); // attempt to overwrite same public_id
-    const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/raw/upload`;
-    const res = await fetch(url, { method: "POST", body: fd });
-    const data = await res.json();
-    if (!res.ok) {
-      console.warn("uploadGalleryJSON response:", data);
-      throw new Error("No se pudo subir gallery.json");
-    }
-    // uploaded; the file will be available at:
-    // https://res.cloudinary.com/<cloud>/raw/upload/<public_id>.json
-    return data;
-  }
-
-  async function loadSharedGallery(){
-    // try to fetch gallery.json from Cloudinary; add cache-buster timestamp to reduce CDN issues
-    const url = `https://res.cloudinary.com/${CLOUD_NAME}/raw/upload/${SHARED_JSON_PUBLIC_ID}.json?t=${Date.now()}`;
-    try {
-      const r = await fetch(url, { cache: "no-store" });
-      if (!r.ok) throw new Error("No encontrado");
-      const json = await r.json();
-      if (Array.isArray(json) && json.length) {
-        galleryItems = json;
-        saveLocal();
-        renderGallery();
-        return true;
-      }
-    } catch(e){
-      // ignore — fallback to local
-      console.warn("No se pudo cargar gallery.json público:", e);
-    }
-    return false;
-  }
-
-  // ============ ADMIN (password hashing + token) ============
-  async function sha256Hex(text){
-    const enc = new TextEncoder();
-    const data = enc.encode(text);
-    const hash = await crypto.subtle.digest('SHA-256', data);
-    const arr = Array.from(new Uint8Array(hash));
-    return arr.map(b => b.toString(16).padStart(2, '0')).join('');
-  }
-
-  async function isAdminLogged(){
-    const token = localStorage.getItem(ADMIN_TOKEN_KEY);
-    return !!token;
-  }
-
-  async function setAdminPassword(password){
-    const h = await sha256Hex(password);
-    localStorage.setItem(ADMIN_HASH_KEY, h);
-    // also create a token (simple)
-    const token = (Date.now() + "_" + Math.random().toString(36).slice(2));
-    localStorage.setItem(ADMIN_TOKEN_KEY, token);
-    isAdmin = true;
-    applyAdminUI();
-  }
-
-  async function verifyAdminPassword(password){
-    const stored = localStorage.getItem(ADMIN_HASH_KEY);
-    if(!stored) return false;
-    const h = await sha256Hex(password);
-    if (h === stored) {
-      const token = (Date.now() + "_" + Math.random().toString(36).slice(2));
-      localStorage.setItem(ADMIN_TOKEN_KEY, token);
-      isAdmin = true;
-      applyAdminUI();
-      return true;
-    }
-    return false;
-  }
-
-  function logoutAdmin(){
-    localStorage.removeItem(ADMIN_TOKEN_KEY);
-    isAdmin = false;
-    applyAdminUI();
-  }
-
-  function applyAdminUI(){
-    // enable/disable upload button and show admin state
-    isAdmin = !!localStorage.getItem(ADMIN_TOKEN_KEY);
-    if (isAdmin) {
-      uploadBtn.classList.remove("disabled");
-      adminBtn.textContent = "Admin (Salir)";
-      adminBtn.style.background = "linear-gradient(90deg,#2b9af3,#b8362f)";
-    } else {
-      uploadBtn.classList.add("disabled");
-      adminBtn.textContent = "Admin";
-      adminBtn.style.background = "#222";
-    }
+  // ============ LOCAL STORAGE ============
+  function init(){
+    loadLocal();
     renderGallery();
-  }
-
-  // ============ ADMIN MODAL HANDLERS ============
-  adminBtn.addEventListener("click", async (e) => {
-    const hasHash = !!localStorage.getItem(ADMIN_HASH_KEY);
-    adminModal.style.display = "flex";
-    adminModal.setAttribute("aria-hidden","false");
-    if (!hasHash) {
-      // First-time setup
-      adminModalTitle.textContent = "Configurar Admin";
-      adminSetSection.style.display = "block";
-      adminLoginSection.style.display = "none";
-    } else {
-      adminModalTitle.textContent = "Acceso Admin";
-      adminSetSection.style.display = "none";
-      adminLoginSection.style.display = "block";
-    }
-  });
-
-  cancelAdminBtn.addEventListener("click", ()=> {
-    adminModal.style.display = "none";
-    adminModal.setAttribute("aria-hidden","true");
-    adminPasswordInput.value = "";
-  });
-  cancelAdminSetBtn.addEventListener("click", ()=> {
-    adminModal.style.display = "none";
-    adminModal.setAttribute("aria-hidden","true");
-    setAdminPasswordInput.value = "";
-    setAdminPasswordConfirmInput.value = "";
-  });
-
-  setAdminBtn.addEventListener("click", async ()=> {
-    const a = setAdminPasswordInput.value || "";
-    const b = setAdminPasswordConfirmInput.value || "";
-    if (!a || !b) return alert("Introduce y confirma la contraseña.");
-    if (a !== b) return alert("Las contraseñas no coinciden.");
-    await setAdminPassword(a);
-    adminModal.style.display = "none";
-    adminModal.setAttribute("aria-hidden","true");
-    setAdminPasswordInput.value = "";
-    setAdminPasswordConfirmInput.value = "";
-    alert("Contraseña guardada. Ahora eres admin.");
-  });
-
-  loginAdminBtn.addEventListener("click", async ()=> {
-    const pass = adminPasswordInput.value || "";
-    if (!pass) return alert("Introduce la contraseña.");
-    const ok = await verifyAdminPassword(pass);
-    if (!ok) {
-      alert("Contraseña incorrecta.");
-      return;
-    }
-    adminModal.style.display = "none";
-    adminModal.setAttribute("aria-hidden","true");
-    adminPasswordInput.value = "";
-    alert("Inicio de sesión correcto.");
-  });
-
-  // long-press/hold adminBtn to logout (convenience)
-  adminBtn.addEventListener("contextmenu", (e)=> {
-    e.preventDefault();
-    if (confirm("¿Cerrar sesión de administrador?")) logoutAdmin();
-  });
-
-  // ============ INIT ============
-  async function init(){
-    // try public shared gallery first
-    const sharedLoaded = await loadSharedGallery();
-    if (!sharedLoaded) {
-      loadLocal();
-    }
-    applyAdminUI();
-    renderGallery();
+    // if there are local items, enable counts
+    updateCounter();
   }
   init();
 
