@@ -312,7 +312,7 @@
   .btn-view{ background:#222; color:var(--gold); flex:1; }
 
   /* modal */
-  #titleModal{
+  #titleModal, #adminModal{
     display:none;
     position:fixed;
     inset:0;
@@ -321,7 +321,7 @@
     justify-content:center;
     z-index:9999;
   }
-  #titleModal .box{
+  .box{
     background:#111;
     padding:18px;
     border-radius:10px;
@@ -330,13 +330,24 @@
     border:1px solid var(--gold);
     color:white;
   }
-  #titleModal input{ width:100%; padding:10px; border-radius:8px; border:1px solid #444; background:#000; color:#fff; margin-bottom:12px; }
+  .box input[type="text"], .box input[type="password"]{ width:100%; padding:10px; border-radius:8px; border:1px solid #444; background:#000; color:#fff; margin-bottom:12px; }
 
   .counter{
     font-weight:700;
     color:var(--muted-light);
     margin-left:auto;
     display:inline-block;
+  }
+
+  .admin-controls{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+
+  .disabled {
+    opacity:0.45;
+    pointer-events:none;
   }
 
 </style>
@@ -360,8 +371,7 @@
       <a href="#inicio">Inicio</a>
       <a href="#about">Sobre Nosotros</a>
       <a href="#team">Líderes</a>
-      <a href="#recruit">Reclutamiento</a>
-      <a href="#gallerySection">Galería</a>
+      <a  href="#gallerySection">Galería</a>
       <button id="themeToggle" style="margin-top:8px;padding:8px 10px;border-radius:8px;border:0;cursor:pointer">Modo Urbano</button>
     </nav>
   </header>
@@ -377,9 +387,8 @@
 
        <div class="buttons">
         <a class="btn gold" href="#about">Sobre Nosotros</a>
-        <a id="joinBtn" class="btn primary"
-           href="https://instagram.com/goldenvipoficial"  
-  target="_blank">ÚNETE AL GRUPO</a>
+        <a id="joinBtn" class="btn primary" href="#" target="_blank">ÚNETE AL GRUPO</a>
+      </div>
     </div>
   </section>
 
@@ -433,37 +442,7 @@
     </div>
   </section>
 
-  <!-- FORMULARIO -->
-  <section id="recruit" class="card">
-    <h3>Formulario de Reclutamiento</h3>
-    <p class="lead">¿Quieres ser parte del equipo? Llena esto.</p>
-
-    <form action="https://formsubmit.co/anedilone27@gmail.com" method="POST">
-
-    <!-- Protección para evitar spam -->
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_template" value="box">
-    <input type="hidden" name="_subject" value="Nueva Solicitud de Golden VIP">
-    <input type="hidden" name="_autoresponse" value="Gracias por aplicar a Golden VIP. Hemos recibido tu solicitud.">
-
-    <label>Nombre del jugador</label>
-    <input type="text" name="nombre" required>
-
-    <label>Juego</label>
-    <select name="juego">
-      <option>Avakin Life</option>
-      <option>IMVU</option>
-    </select>
-
-    <label>Edad</label>
-    <input type="number" name="edad" min="13" required>
-
-    <label>¿Por qué quieres unirte?</label>
-    <textarea name="mensaje" rows="4"></textarea>
-
-    <button type="submit">Enviar Solicitud</button>
-</form>
-  </section>
+  
 
   <!-- ORIGINAL MEDIA GRID (kept) -->
   <div class="grid" id="mediaGrid"></div>
@@ -475,55 +454,19 @@
       <div class="counter" id="counter">📸 0 · 🎥 0</div>
     </div>
 
-    <!-- Botón de subida -->
     <div style="display:flex;gap:12px;margin-top:12px;align-items:center;">
-      <button id="uploadBtn" style="
-            padding:12px 18px;
-            background:var(--gold);
-            border:0;
-            border-radius:10px;
-            font-weight:800;
-            cursor:pointer;
-      ">
-        + Subir Imagen / Video
-      </button>
+      <div class="admin-controls">
+        <button id="adminBtn" style="padding:10px 14px;background:#222;border:0;border-radius:10px;color:var(--gold);font-weight:800;cursor:pointer;">Admin</button>
+        <button id="uploadBtn" style="padding:12px 18px;background:var(--gold);border:0;border-radius:10px;font-weight:800;cursor:pointer;" class="disabled">
+          + Subir Imagen / Video
+        </button>
+      </div>
 
       <input type="file" id="fileInput" accept="image/*,video/*" style="display:none" />
     </div>
 
-    <!-- Contenedor de galería -->
-    <div id="gallery" style="
-        display:grid;
-        grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));
-        gap:15px;
-        margin-top:20px;
-    "></div>
-
-    <!-- PREVIEW A PANTALLA COMPLETA -->
-    <div id="preview" style="
-        position:fixed;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        background:rgba(0,0,0,0.9);
-        display:none;
-        justify-content:center;
-        align-items:center;
-        z-index:9999;
-    ">
-        <span id="closePreview" style="
-            position:absolute;
-            top:20px;
-            right:20px;
-            font-size:25px;
-            color:white;
-            cursor:pointer;
-        ">✖</span>
-
-        <div id="previewContent"></div>
-    </div>
-</section>
+    <div id="gallery"></div>
+  </section>
 
   <!-- FOOTER -->
   <footer>
@@ -550,13 +493,44 @@
   </div>
 </div>
 
-<!-- SCRIPT: integrado, sin top-level await -->
+<!-- Admin modal (login / set password) -->
+<div id="adminModal" aria-hidden="true">
+  <div class="box">
+    <h3 style="color:var(--gold); margin-top:0" id="adminModalTitle">Acceso Admin</h3>
+
+    <div id="adminSetSection" style="display:none;">
+      <p>Configura una contraseña de administrador (se guarda hasheada en tu navegador).</p>
+      <input type="password" id="setAdminPassword" placeholder="Nueva contraseña" />
+      <input type="password" id="setAdminPasswordConfirm" placeholder="Confirmar contraseña" />
+      <div style="display:flex;gap:8px;">
+        <button id="setAdminBtn" class="btn-small" style="background:var(--gold);">Guardar</button>
+        <button id="cancelAdminSetBtn" class="btn-small" style="background:#444;color:white;">Cancelar</button>
+      </div>
+    </div>
+
+    <div id="adminLoginSection" style="display:none;">
+      <p>Introduce tu contraseña de administrador.</p>
+      <input type="password" id="adminPassword" placeholder="Contraseña" />
+      <div style="display:flex;gap:8px;">
+        <button id="loginAdminBtn" class="btn-small" style="background:var(--gold);">Entrar</button>
+        <button id="cancelAdminBtn" class="btn-small" style="background:#444;color:white;">Cancelar</button>
+      </div>
+      <div style="margin-top:12px;color:#ccc;font-size:13px">Si olvidas la contraseña, elimina la clave <code>goldenvip_admin_hash</code> en el almacenamiento local del navegador y vuelve a configurar.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SCRIPT: integrado -->
 <script>
 (function(){
   // ============ CONFIG ============
   const CLOUD_NAME = "dkwlzwvfg";
   const UPLOAD_PRESET = "goldenvip_uploads";
   const STORAGE_KEY = "goldenvip_gallery_v1";
+  const ADMIN_HASH_KEY = "goldenvip_admin_hash";
+  const ADMIN_TOKEN_KEY = "goldenvip_admin_token";
+  const SHARED_JSON_PUBLIC_ID = "goldenvip_gallery"; // will be uploaded as raw -> accessible at /raw/upload/goldenvip_gallery.json
 
   // ============ SELECTORES ============
   const uploadBtn = document.getElementById("uploadBtn");
@@ -568,6 +542,21 @@
   const mediaTitleInput = document.getElementById("mediaTitleInput");
   const confirmTitleBtn = document.getElementById("confirmTitleBtn");
   const cancelTitleBtn = document.getElementById("cancelTitleBtn");
+
+  const adminBtn = document.getElementById("adminBtn");
+  const adminModal = document.getElementById("adminModal");
+  const adminModalTitle = document.getElementById("adminModalTitle");
+  const adminSetSection = document.getElementById("adminSetSection");
+  const adminLoginSection = document.getElementById("adminLoginSection");
+
+  const setAdminPasswordInput = document.getElementById("setAdminPassword");
+  const setAdminPasswordConfirmInput = document.getElementById("setAdminPasswordConfirm");
+  const setAdminBtn = document.getElementById("setAdminBtn");
+  const cancelAdminSetBtn = document.getElementById("cancelAdminSetBtn");
+
+  const adminPasswordInput = document.getElementById("adminPassword");
+  const loginAdminBtn = document.getElementById("loginAdminBtn");
+  const cancelAdminBtn = document.getElementById("cancelAdminBtn");
 
   // Keep original small scripts working (menu, theme, populate)
   // Tema oscuro/urbano
@@ -618,6 +607,7 @@
   // ============ STATE ============
   let pendingFile = null; // archivo seleccionado antes de confirmar título
   let galleryItems = [];  // { id, url, type, title, public_id? }
+  let isAdmin = false;
 
   // ============ UTIL ============
   function saveLocal() {
@@ -680,8 +670,12 @@
       delBtn.textContent = "Eliminar";
       delBtn.addEventListener("click", ()=> deleteItem(item.id));
 
+      // Only show delete if admin logged in
+      if (isAdmin) {
+        actions.appendChild(delBtn);
+      }
+
       actions.appendChild(viewBtn);
-      actions.appendChild(delBtn);
 
       div.appendChild(title);
       div.appendChild(actions);
@@ -721,15 +715,19 @@
 
   // ============ DELETE ============
   function deleteItem(id) {
-    if (!confirm("¿Eliminar este elemento de la galería local? (No borra del servidor Cloudinary)")) return;
+    if (!isAdmin) { alert("Solo el administrador puede eliminar."); return; }
+    if (!confirm("¿Eliminar este elemento de la galería local y actualizar la lista compartida? (No borra de Cloudinary automáticamente)")) return;
     galleryItems = galleryItems.filter(i=>i.id !== id);
     saveLocal();
     renderGallery();
+    // update shared JSON on Cloudinary
+    uploadGalleryJSON().catch(err=> console.warn("No se pudo actualizar gallery.json:", err));
   }
 
-  // ============ UPLOAD FLOW (with title modal) ============
+  // ============ UPLOAD HANDLERS ============
   uploadBtn.addEventListener("click", (e)=> {
     e.preventDefault();
+    if (!isAdmin) return alert("Solo el administrador puede subir archivos. Pulsa 'Admin' para iniciar sesión.");
     fileInput.click();
   });
 
@@ -759,7 +757,7 @@
       return;
     }
 
-    // temporary preview (local)
+    // temporary preview
     const tempId = "temp_" + Date.now();
     const tempUrl = URL.createObjectURL(pendingFile);
     const tempType = pendingFile.type.startsWith("video") ? "video" : "image";
@@ -769,11 +767,10 @@
     titleModal.style.display = "none";
     titleModal.setAttribute("aria-hidden","true");
 
-    // upload to Cloudinary
+    // upload
     try {
       const uploaded = await uploadToCloudinary(pendingFile);
       if (uploaded && uploaded.secure_url) {
-        // remove temps
         galleryItems = galleryItems.filter(i=>!i._temp);
         const newItem = {
           id: uploaded.public_id || ("id_"+Date.now()),
@@ -786,6 +783,8 @@
         saveLocal();
         renderGallery();
         alert("Archivo subido correctamente ✅");
+        // upload shared JSON so others see the file
+        await uploadGalleryJSON();
       } else {
         galleryItems = galleryItems.filter(i=>!i._temp);
         renderGallery();
@@ -808,27 +807,190 @@
     const fd = new FormData();
     fd.append("file", file);
     fd.append("upload_preset", UPLOAD_PRESET);
-    // Optional: set folder or tags:
-    // fd.append("folder", "goldenvip_uploads");
-    // fd.append("tags", "goldenvip_uploads");
+    // allow client to choose folder/public_id if needed:
+    // fd.append("folder","goldenvip_uploads");
     const res = await fetch(url, { method: "POST", body: fd });
     return res.json();
   }
 
-  // ============ HELPERS / INIT ============
-  function tryPreloadSample(){
-    const samplePath = "/mnt/data/Captura de pantalla 2025-11-23 111936.png";
-    fetch(samplePath, { method: "HEAD" }).then(r=>{
-      if (r.ok && !localStorage.getItem(STORAGE_KEY)) {
-        galleryItems.push({ id: "sample_local", url: samplePath, type: "image", title: "Imagen de ejemplo" });
-        saveLocal();
-      }
-    }).catch(()=>{/* ignore if not accessible */});
+  // ============ SHARED gallery.json (raw) ============
+  async function uploadGalleryJSON(){
+    // create a Blob of the gallery items (we'll store only essential fields to keep file small)
+    const payload = galleryItems.map(i => ({
+      id: i.id,
+      public_id: i.public_id || null,
+      url: i.url,
+      type: i.type,
+      title: i.title
+    }));
+    const blob = new Blob([JSON.stringify(payload)], { type: "application/json" });
+    const fd = new FormData();
+    fd.append("file", blob, "gallery.json");
+    fd.append("upload_preset", UPLOAD_PRESET);
+    // upload as raw so we can fetch it from /raw/upload/<public_id>.json
+    fd.append("resource_type", "raw");
+    fd.append("public_id", SHARED_JSON_PUBLIC_ID); // attempt to overwrite same public_id
+    const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/raw/upload`;
+    const res = await fetch(url, { method: "POST", body: fd });
+    const data = await res.json();
+    if (!res.ok) {
+      console.warn("uploadGalleryJSON response:", data);
+      throw new Error("No se pudo subir gallery.json");
+    }
+    // uploaded; the file will be available at:
+    // https://res.cloudinary.com/<cloud>/raw/upload/<public_id>.json
+    return data;
   }
 
-  function init(){
-    tryPreloadSample();
-    loadLocal();
+  async function loadSharedGallery(){
+    // try to fetch gallery.json from Cloudinary; add cache-buster timestamp to reduce CDN issues
+    const url = `https://res.cloudinary.com/${CLOUD_NAME}/raw/upload/${SHARED_JSON_PUBLIC_ID}.json?t=${Date.now()}`;
+    try {
+      const r = await fetch(url, { cache: "no-store" });
+      if (!r.ok) throw new Error("No encontrado");
+      const json = await r.json();
+      if (Array.isArray(json) && json.length) {
+        galleryItems = json;
+        saveLocal();
+        renderGallery();
+        return true;
+      }
+    } catch(e){
+      // ignore — fallback to local
+      console.warn("No se pudo cargar gallery.json público:", e);
+    }
+    return false;
+  }
+
+  // ============ ADMIN (password hashing + token) ============
+  async function sha256Hex(text){
+    const enc = new TextEncoder();
+    const data = enc.encode(text);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    const arr = Array.from(new Uint8Array(hash));
+    return arr.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  async function isAdminLogged(){
+    const token = localStorage.getItem(ADMIN_TOKEN_KEY);
+    return !!token;
+  }
+
+  async function setAdminPassword(password){
+    const h = await sha256Hex(password);
+    localStorage.setItem(ADMIN_HASH_KEY, h);
+    // also create a token (simple)
+    const token = (Date.now() + "_" + Math.random().toString(36).slice(2));
+    localStorage.setItem(ADMIN_TOKEN_KEY, token);
+    isAdmin = true;
+    applyAdminUI();
+  }
+
+  async function verifyAdminPassword(password){
+    const stored = localStorage.getItem(ADMIN_HASH_KEY);
+    if(!stored) return false;
+    const h = await sha256Hex(password);
+    if (h === stored) {
+      const token = (Date.now() + "_" + Math.random().toString(36).slice(2));
+      localStorage.setItem(ADMIN_TOKEN_KEY, token);
+      isAdmin = true;
+      applyAdminUI();
+      return true;
+    }
+    return false;
+  }
+
+  function logoutAdmin(){
+    localStorage.removeItem(ADMIN_TOKEN_KEY);
+    isAdmin = false;
+    applyAdminUI();
+  }
+
+  function applyAdminUI(){
+    // enable/disable upload button and show admin state
+    isAdmin = !!localStorage.getItem(ADMIN_TOKEN_KEY);
+    if (isAdmin) {
+      uploadBtn.classList.remove("disabled");
+      adminBtn.textContent = "Admin (Salir)";
+      adminBtn.style.background = "linear-gradient(90deg,#2b9af3,#b8362f)";
+    } else {
+      uploadBtn.classList.add("disabled");
+      adminBtn.textContent = "Admin";
+      adminBtn.style.background = "#222";
+    }
+    renderGallery();
+  }
+
+  // ============ ADMIN MODAL HANDLERS ============
+  adminBtn.addEventListener("click", async (e) => {
+    const hasHash = !!localStorage.getItem(ADMIN_HASH_KEY);
+    adminModal.style.display = "flex";
+    adminModal.setAttribute("aria-hidden","false");
+    if (!hasHash) {
+      // First-time setup
+      adminModalTitle.textContent = "Configurar Admin";
+      adminSetSection.style.display = "block";
+      adminLoginSection.style.display = "none";
+    } else {
+      adminModalTitle.textContent = "Acceso Admin";
+      adminSetSection.style.display = "none";
+      adminLoginSection.style.display = "block";
+    }
+  });
+
+  cancelAdminBtn.addEventListener("click", ()=> {
+    adminModal.style.display = "none";
+    adminModal.setAttribute("aria-hidden","true");
+    adminPasswordInput.value = "";
+  });
+  cancelAdminSetBtn.addEventListener("click", ()=> {
+    adminModal.style.display = "none";
+    adminModal.setAttribute("aria-hidden","true");
+    setAdminPasswordInput.value = "";
+    setAdminPasswordConfirmInput.value = "";
+  });
+
+  setAdminBtn.addEventListener("click", async ()=> {
+    const a = setAdminPasswordInput.value || "";
+    const b = setAdminPasswordConfirmInput.value || "";
+    if (!a || !b) return alert("Introduce y confirma la contraseña.");
+    if (a !== b) return alert("Las contraseñas no coinciden.");
+    await setAdminPassword(a);
+    adminModal.style.display = "none";
+    adminModal.setAttribute("aria-hidden","true");
+    setAdminPasswordInput.value = "";
+    setAdminPasswordConfirmInput.value = "";
+    alert("Contraseña guardada. Ahora eres admin.");
+  });
+
+  loginAdminBtn.addEventListener("click", async ()=> {
+    const pass = adminPasswordInput.value || "";
+    if (!pass) return alert("Introduce la contraseña.");
+    const ok = await verifyAdminPassword(pass);
+    if (!ok) {
+      alert("Contraseña incorrecta.");
+      return;
+    }
+    adminModal.style.display = "none";
+    adminModal.setAttribute("aria-hidden","true");
+    adminPasswordInput.value = "";
+    alert("Inicio de sesión correcto.");
+  });
+
+  // long-press/hold adminBtn to logout (convenience)
+  adminBtn.addEventListener("contextmenu", (e)=> {
+    e.preventDefault();
+    if (confirm("¿Cerrar sesión de administrador?")) logoutAdmin();
+  });
+
+  // ============ INIT ============
+  async function init(){
+    // try public shared gallery first
+    const sharedLoaded = await loadSharedGallery();
+    if (!sharedLoaded) {
+      loadLocal();
+    }
+    applyAdminUI();
     renderGallery();
   }
   init();
