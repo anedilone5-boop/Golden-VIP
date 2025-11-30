@@ -24,7 +24,7 @@
     --border-gold: 1px solid rgba(212, 175, 55, 0.2);
     --font-heading: 'Cinzel', serif;
     --font-body: 'Montserrat', sans-serif;
-  }
+ }
 
   /* RESET & BASE */
   *{box-sizing:border-box}
@@ -61,7 +61,8 @@
 
   /* HEADER & NAV */
   header {
-    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    position: fixed; top: 0; left: 0;
+    width: 100%; z-index: 1000;
     background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(212, 175, 55, 0.1);
     padding: 15px 0;
@@ -72,7 +73,8 @@
   .logo h1 { font-size: 22px; color: #fff; letter-spacing: 1px; }
 
   nav ul { display: flex; gap: 30px; list-style: none; margin: 0; padding: 0; }
-  nav a { color: var(--text-main); text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: 1px; transition: 0.3s; text-transform: uppercase; }
+  nav a { color: var(--text-main); text-decoration: none; font-size: 14px; font-weight: 500;
+    letter-spacing: 1px; transition: 0.3s; text-transform: uppercase; }
   nav a:hover, nav a.active { color: var(--gold-primary); text-shadow: 0 0 10px rgba(212,175,55,0.4); }
 
   .mobile-toggle { display: none; background: none; border: none; color: var(--gold-primary); font-size: 28px; cursor: pointer; }
@@ -85,7 +87,7 @@
     background: linear-gradient(to bottom, rgba(5,5,5,0.3), var(--bg-deep)), url('https://i.ibb.co/Gv05Nhtp/image-removebg-preview-1.png');
     background-size: cover; background-position: center; background-attachment: fixed;
     padding-top: 80px; position: relative;
-  }
+ }
   .hero::after { content:''; position: absolute; inset:0; background: radial-gradient(circle, transparent 0%, var(--bg-deep) 100%); pointer-events: none; }
   
   .hero-content { position: relative; z-index: 2; max-width: 800px; animation: fadeInUp 1s ease-out; }
@@ -94,12 +96,14 @@
 
   .btn {
     display: inline-block; padding: 16px 40px; border-radius: 50px;
-    font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+    font-family: var(--font-body); font-weight: 700; text-transform: uppercase;
+    letter-spacing: 2px;
     text-decoration: none; transition: 0.4s; position: relative; overflow: hidden;
-  }
+ }
   .btn-gold {
     background: linear-gradient(45deg, var(--gold-dark), var(--gold-primary));
-    color: #000; box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    color: #000;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
   }
   .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 0 40px rgba(212, 175, 55, 0.6); }
   .btn-outline { border: 1px solid var(--gold-primary); color: var(--gold-primary); margin-left: 15px; }
@@ -110,7 +114,8 @@
   
   .card-box {
     background: rgba(255,255,255,0.03); border: var(--border-gold);
-    padding: 30px; border-radius: 4px; position: relative;
+    padding: 30px; border-radius: 4px;
+    position: relative;
     transition: 0.4s; height: 100%;
   }
   .card-box:hover { background: rgba(212,175,55,0.08); transform: translateY(-5px); }
@@ -126,31 +131,32 @@
   .activity-item { 
     background: var(--bg-card); padding: 25px; border-radius: 8px; 
     border-left: 3px solid var(--gold-primary);
-  }
+ }
   .activity-item h4 { color: var(--gold-light); margin-bottom: 10px; font-size: 1.1rem; }
   .activity-item p { font-size: 0.9rem; color: #999; }
 
   /* BADGE GUIDE SECTION */
   .badge-guide-grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
       gap: 25px;
+      margin-top: 30px;
   }
   .badge-guide-item {
       background: var(--bg-card); 
-      padding: 20px; 
+      padding: 20px;
       border-radius: 8px; 
       display: flex; 
       align-items: center; 
       gap: 15px;
       border: 1px solid #222;
       transition: 0.3s;
-  }
+ }
   .badge-guide-item:hover {
       border-color: var(--gold-primary);
       transform: translateY(-2px);
       background: rgba(212, 175, 55, 0.05);
-  }
+ }
   .badge-icon-wrap {
       width: 40px;
       height: 40px;
@@ -170,22 +176,32 @@
       font-size: 0.85rem;
       color: #999;
       margin: 0;
-  }
+ }
 
   /* MEMBERS & LEADERS SHARED STYLES */
   .members-grid, .leader-wrap { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
     gap: 30px; 
     margin-top: 40px; 
     justify-content: center;
-  }
+ }
 
   .member-card, .leader { 
     text-align: center; 
     position: relative; 
-    padding-bottom: 40px; /* Espacio extra para las insignias */
+    padding-bottom: 40px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid transparent;
+    transition: 0.3s;
   }
+  .member-card:hover, .leader:hover {
+      border-color: rgba(212, 175, 55, 0.3);
+      background: rgba(255,255,255,0.04);
+  }
+
   .leader img, .member-card img {
     width: 140px;
     height: 140px; 
@@ -194,73 +210,77 @@
     padding: 5px; 
     background: var(--bg-deep);
     transition: 0.4s;
-  }
+ }
   
   .member-card img {
     width: 100px; 
     height: 100px; 
-    border: 3px solid #333; 
-  }
+    border: 3px solid #333;
+ }
   .leader img {
-      border: 3px solid var(--gold-primary); 
-  }
+      border: 3px solid var(--gold-primary);
+ }
 
   .leader:hover img, .member-card:hover img { box-shadow: 0 0 30px rgba(212,175,55,0.3); transform: scale(1.05); }
   
   .leader h4, .member-card h4 { 
     margin-top: 15px; 
     font-size: 1.1rem; 
-    color: var(--gold-primary); 
-  }
+    color: var(--gold-primary);
+ }
   .member-card h4 { color: var(--text-main); font-size: 1rem; }
   
   .leader-role, .member-role { 
-    font-size: 0.85rem; 
+    font-size: 0.85rem;
     color: #777; 
     font-weight: 500;
     display: block;
+    margin-bottom: 10px;
   }
   
-  /* ESTILO PARA INSIGNIAS MÚLTIPLES */
+  /* ESTILO PARA INSIGNIAS */
   .badge-list {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 5px 3px;
-      max-width: 100%;
-  }
+      gap: 5px;
+      margin-top: 10px;
+      width: 100%;
+      min-height: 25px;
+ }
   .multi-badge { 
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px; 
-    height: 20px; 
-    border-radius: 50%; 
-    font-size: 10px; 
+    width: 24px; 
+    height: 24px; 
+    border-radius: 50%;
+    font-size: 12px; 
     line-height: 1;
-    color: #000;
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
-    border: 1px solid #00000033;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.2);
     transition: transform 0.2s;
-  }
+    cursor: help;
+ }
   .multi-badge:hover {
-      transform: scale(1.2);
-  }
+      transform: scale(1.3);
+      z-index: 10;
+ }
 
   /* GALLERY, ADMIN UI, FOOTER */
-  .gallery-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 20px; }
+  .gallery-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px;
+    border-bottom: 1px solid #222; padding-bottom: 20px; }
   .stats { font-family: var(--font-heading); color: var(--gold-light); font-size: 0.9rem; }
   
   .masonry { column-count: 4; column-gap: 15px; }
   @media(max-width: 900px){ .masonry{column-count: 3;} }
   @media(max-width: 600px){ .masonry{column-count: 2;} }
 
-  .media-item { break-inside: avoid; margin-bottom: 15px; position: relative; group: 1; border-radius: 8px; overflow: hidden; background: #000; }
-  .media-item img, .media-item video { width: 100%; display: block; transition: 0.5s; opacity: 0.9; }
+  .media-item { break-inside: avoid; margin-bottom: 15px;
+    position: relative; group: 1; border-radius: 8px; overflow: hidden; background: #000; }
+  .media-item img, .media-item video { width: 100%;
+    display: block; transition: 0.5s; opacity: 0.9; }
   .media-item:hover img, .media-item:hover video { opacity: 1; transform: scale(1.05); }
   
   .media-overlay {
@@ -268,38 +288,47 @@
     background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
     padding: 20px 10px 10px; transform: translateY(100%); transition: 0.3s;
     display: flex; justify-content: space-between; align-items: flex-end;
-  }
+ }
   .media-item:hover .media-overlay { transform: translateY(0); }
   .media-title { font-size: 12px; color: #fff; font-weight: 600; }
-  .btn-icon { background: rgba(255,255,255,0.1); border: 0; color: #fff; width: 28px; height: 28px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .btn-icon { background: rgba(255,255,255,0.1); border: 0; color: #fff; width: 28px; height: 28px; border-radius: 4px; cursor: pointer; display: flex;
+    align-items: center; justify-content: center; }
   .btn-icon:hover { background: var(--gold-primary); color: #000; }
 
-  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+  .modal { display: none; position: fixed;
+    inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(5px);
+ }
   .modal-box { 
-    background: #111; border: 1px solid var(--gold-dark); padding: 30px; width: 90%; max-width: 500px; 
-    text-align: center; border-radius: 12px;
-  }
+  background: #111; border: 1px solid var(--gold-dark); padding: 30px; width: 90%; max-width: 500px;
+  text-align: center; border-radius: 12px;
+  max-height: 90vh; /* Permite que el modal no sea más alto que la pantalla */
+  overflow-y: auto; /* Habilita el desplazamiento vertical si el contenido es muy largo */
+}
   .modal-box input, .modal-box select { 
-    width: 100%; padding: 12px; background: #000; border: 1px solid #333; color: #fff; margin: 15px 0; 
+    width: 100%; padding: 12px;
+    background: #000; border: 1px solid #333; color: #fff; margin: 15px 0; 
     border-radius: 6px; font-family: var(--font-body);
-  }
+ }
   .modal-box input:focus, .modal-box select:focus { border-color: var(--gold-primary); outline: none; }
-  .modal-box label { display: block; text-align: left; color: var(--gold-primary); margin-top: 15px; font-size: 0.9rem; }
+  .modal-box label { display: block; text-align: left;
+    color: var(--gold-primary); margin-top: 15px; font-size: 0.9rem; }
   .member-list-item { 
-    display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid #222;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px; border-bottom: 1px solid #222;
     font-size: 0.9rem;
   }
   .member-list-item button { 
-    background: var(--gold-primary); color: #000; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;
+    background: var(--gold-primary);
+    color: #000; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;
     font-size: 12px; margin-left: 10px;
-  }
+ }
   .current-badges-display {
       display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;
       justify-content: center;
-  }
+ }
   .current-badge {
       background: #222; padding: 4px 8px; border-radius: 4px; font-size: 12px;
-  }
+ }
 
   footer { background: #020202; padding: 50px 0 20px; text-align: center; border-top: 1px solid #111; margin-top: 60px; }
   .socials { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; }
@@ -319,7 +348,7 @@
     .nav-wrap nav {
       display: none; position: absolute; top: 100%; left: 0; width: 100%;
       background: #000; flex-direction: column; padding: 20px; border-bottom: 1px solid #333;
-    }
+ }
     .nav-wrap nav.open { display: flex; }
     .member-card img { width: 80px; height: 80px; }
     .badge-guide-grid { grid-template-columns: 1fr; }
@@ -413,9 +442,7 @@
   <div class="container">
     <h3 style="text-align:center; color: var(--gold-primary); margin-bottom: 10px;">Reconocimiento y Estatus</h3>
     <h2 style="text-align:center; margin-bottom: 50px;">Guía de Condecoraciones VIP (23)</h2>
-
-    <div class="badge-guide-grid" id="badgeGuideGrid">
-      </div>
+    <div class="badge-guide-grid" id="badgeGuideGrid"></div>
   </div>
 </section>
 
@@ -423,17 +450,14 @@
   <div class="container">
     <h3 style="text-align:center; color: var(--gold-primary); margin-bottom: 10px;">La Comunidad</h3>
     <h2 style="text-align:center; margin-bottom: 50px;">Nuestros Talentos VIP</h2>
-
-    <div class="members-grid" id="membersGrid">
-      </div>
+    <div class="members-grid" id="membersGrid"></div>
   </div>
 </section>
 
 <section id="team">
   <div class="container">
     <h2 style="text-align:center; margin-bottom: 40px;">Junta Directiva</h2>
-    <div class="leader-wrap fade-in" id="leaderWrap">
-      </div>
+    <div class="leader-wrap fade-in" id="leaderWrap"></div>
   </div>
 </section>
 
@@ -451,15 +475,14 @@
         <span style="color:var(--gold-primary); font-weight:bold;"> Modo Administrador</span>
         <div style="display:flex; gap:10px;">
             <button id="manageLogoBtn" class="btn-icon" style="width: auto; padding: 0 15px; background: #0088AA; color: #fff;">Gestionar Logo</button>
-            <button id="manageImagesBtn" class="btn-icon" style="width: auto; padding: 0 15px; background: var(--accent-red); color: #fff;">Gestionar Perfiles</button>
+            <button id="manageProfilesBtn" class="btn-icon" style="width: auto; padding: 0 15px; background: #5a5a5a; color: #fff;">Gestionar Miembros/Líderes</button>
             <button id="manageBadgesBtn" class="btn-icon" style="width: auto; padding: 0 15px; background: var(--accent-red); color: #fff;">Gestionar Insignias</button>
             <button id="uploadTriggerBtn" class="btn-icon" style="width: auto; padding: 0 15px; background: var(--gold-primary); color: #000;">+ Subir Contenido</button>
         </div>
         <input type="file" id="fileInput" accept="image/*,video/*" style="display:none" />
     </div>
 
-    <div class="masonry" id="galleryGrid">
-      </div>
+    <div class="masonry" id="galleryGrid"></div>
 
   </div>
 </section>
@@ -468,17 +491,9 @@
 <footer>
   <div class="container">
     <div class="socials">
-      <a href="https://www.instagram.com/goldenvipoficial/" target="_blank" title="Instagram Oficial">
-          <i class="fab fa-instagram"></i>
-      </a>
-      
-      <a href="#" style="cursor: default; opacity: 0.6;" title="TikTok (No funcional)">
-          <i class="fab fa-tiktok"></i>
-      </a>
-      
-      <a href="#" style="cursor: default; opacity: 0.6;" title="YouTube (No funcional)">
-          <i class="fab fa-youtube"></i>
-      </a>
+      <a href="https://www.instagram.com/goldenvipoficial/" target="_blank" title="Instagram Oficial"><i class="fab fa-instagram"></i></a>
+      <a href="#" style="cursor: default; opacity: 0.6;" title="TikTok (No funcional)"><i class="fab fa-tiktok"></i></a>
+      <a href="#" style="cursor: default; opacity: 0.6;" title="YouTube (No funcional)"><i class="fab fa-youtube"></i></a>
     </div>
     <p class="copyright">© 2025 GOLDEN VIP. Todos los derechos reservados.</p>
     <button id="adminToggle">Staff Login</button>
@@ -521,8 +536,7 @@
             <option value="">(Seleccionar Insignia)</option>
         </select>
         
-        <div class="current-badges-display" id="currentMemberBadges">
-            </div>
+        <div class="current-badges-display" id="currentMemberBadges"></div>
 
         <div style="display:flex; gap:10px; justify-content:center; margin-top: 20px;">
             <button id="addBadgeBtn" class="btn-gold" style="border:0; cursor:pointer; padding:10px 20px; font-size:14px;">Agregar Insignia</button>
@@ -532,8 +546,7 @@
         <button id="closeBadgesBtn" style="background:transparent; border:1px solid #444; color:#fff; padding:10px 20px; border-radius:50px; cursor:pointer; margin-top: 20px;">Cerrar</button>
 
         <h4 style="margin-top: 30px; color:var(--gold-light); font-size: 1.2rem; border-top: 1px solid #222; padding-top: 20px;">Miembros con Insignias:</h4>
-        <div id="rankedMemberList" style="max-height: 200px; overflow-y: auto; text-align: left;">
-            </div>
+        <div id="rankedMemberList" style="max-height: 200px; overflow-y: auto; text-align: left;"></div>
     </div>
 </div>
 
@@ -541,104 +554,117 @@
     <div class="modal-box" style="max-width: 400px;">
         <h3 style="color:var(--gold-primary)">Actualizar Logo del Sitio</h3>
         <p style="font-size:13px; color:#888;">Cambia el logo principal del encabezado. (URL de imagen).</p>
-        
         <label for="newLogoUrlInput">Nueva URL de la Imagen (Link Directo):</label>
         <input type="url" id="newLogoUrlInput" placeholder="https://i.ibb.co/nuevo-logo.png">
-        
         <div style="display:flex; gap:10px; justify-content:center; margin-top: 20px;">
             <button id="updateLogoBtn" class="btn-gold" style="border:0; cursor:pointer; padding:10px 20px; font-size:14px;">Actualizar Logo</button>
         </div>
-        
         <button id="closeLogoBtn" style="background:transparent; border:1px solid #444; color:#fff; padding:10px 20px; border-radius:50px; cursor:pointer; margin-top: 20px;">Cerrar</button>
     </div>
 </div>
 
-<div id="imageModal" class="modal">
-    <div class="modal-box">
-        <h3 style="color:var(--gold-primary)">Gestionar Imagen de Perfil</h3>
-        <p style="font-size:13px; color:#888;">Actualiza la foto de perfil de un líder o miembro. (URL de imagen).</p>
+<div id="profileModal" class="modal">
+    <div class="modal-box" style="max-width: 600px;">
+        <h3 style="color:var(--gold-primary)">Administrar Perfiles (Miembros y Líderes)</h3>
+        <p style="font-size:13px; color:#888;">Edita, elimina o crea perfiles de la Junta Directiva y Miembros VIP.</p>
         
-        <label for="imageUsernameInput">Nombre (Ej: Ane, Xina o MiembroTalento):</label>
-        <input type="text" id="imageUsernameInput" placeholder="Nombre del miembro/líder">
+        <h4 style="margin-top: 20px; color:var(--gold-light); font-size: 1.1rem; border-top: 1px solid #333; padding-top: 15px;">Editar Perfil Existente:</h4>
+        <label for="profileMemberSelect">Seleccionar Miembro/Líder:</label>
+        <select id="profileMemberSelect" style="margin-bottom: 15px;">
+            <option value="">(Seleccionar Perfil para Editar)</option>
+        </select>
         
-        <label for="newImageUrlInput">Nueva URL de la Imagen (Link Directo):</label>
-        <input type="url" id="newImageUrlInput" placeholder="https://i.ibb.co/nueva-imagen.jpg">
-        
-        <div style="display:flex; gap:10px; justify-content:center; margin-top: 20px;">
-            <button id="updateImageBtn" class="btn-gold" style="border:0; cursor:pointer; padding:10px 20px; font-size:14px;">Actualizar Imagen</button>
+        <div id="profileEditForm" class="hidden" style="text-align: left; padding-top: 5px;">
+            <label for="editNameInput">Nuevo Nombre:</label>
+            <input type="text" id="editNameInput" placeholder="Nombre de Avakin/IMVU">
+
+            <label for="editRoleInput">Nuevo Rol (Ej: CEO, Director, Bailarín VIP):</label>
+            <input type="text" id="editRoleInput" placeholder="Rol del Miembro/Líder">
+
+            <label for="editImageUrlInput">URL de la Imagen (Link Directo):</label>
+            <input type="url" id="editImageUrlInput" placeholder="https://i.ibb.co/nueva-imagen.jpg">
+
+            <div style="display:flex; gap:10px; justify-content:center; margin-top: 20px;">
+                <button id="updateProfileBtn" class="btn-gold" style="border:0; cursor:pointer; padding:10px 20px; font-size:14px;">Guardar Cambios</button>
+                <button id="deleteMemberBtn" style="background:var(--accent-red); border:0; color:#fff; padding:10px 20px; border-radius:50px; cursor:pointer; font-size:14px;">Eliminar Perfil</button>
+            </div>
+        </div>
+
+        <h4 style="margin-top: 30px; color:var(--gold-light); font-size: 1.1rem; border-top: 1px solid #333; padding-top: 15px;">Crear Nuevo Perfil:</h4>
+        <div id="newProfileForm" style="text-align: left;">
+            <label for="newNameInput">Nombre (Único):</label>
+            <input type="text" id="newNameInput" placeholder="Nombre de Avakin/IMVU">
+
+            <label for="newRoleInput">Rol (Ej: CEO, Director, Bailarín VIP):</label>
+            <input type="text" id="newRoleInput" placeholder="Rol del Miembro/Líder">
+
+            <label for="newImageUrlInput">URL de la Imagen (Opcional):</label>
+            <input type="url" id="newImageUrlInput" placeholder="https://i.ibb.co/nueva-imagen.jpg">
+            
+            <div style="display:flex; justify-content:center; margin-top: 20px;">
+                <button id="createMemberBtn" class="btn-gold" style="border:0; cursor:pointer; padding:10px 20px; font-size:14px;">Crear Perfil</button>
+            </div>
         </div>
         
-        <button id="closeImageBtn" style="background:transparent; border:1px solid #444; color:#fff; padding:10px 20px; border-radius:50px; cursor:pointer; margin-top: 20px;">Cerrar</button>
+        <button id="closeProfileBtn" style="background:transparent; border:1px solid #444; color:#fff; padding:10px 20px; border-radius:50px; cursor:pointer; margin-top: 20px;">Cerrar</button>
     </div>
 </div>
-
+  
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
 <script>
-(async function(){
-  // --- CONFIGURACIÓN ---
+document.addEventListener("DOMContentLoaded", async function(){
+  // --- CONFIGURACIÓN DE SUPABASE Y CLOUDINARY ---
+  // TUS CREDENCIALES DE SUPABASE (INSERTADAS AQUÍ)
+  const SUPABASE_URL = 'https://vohdvamastvhqlfyjnln.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZvaGR2YW1hc3R2aHFsZnlqbmxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ1MDEzNDUsImV4cCI6MjA4MDA3NzM0NX0.Xwzlyjhf7MofwZancNRyu3X0luYl9P5unB0s7UMBNlg';
+
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
   const CONFIG = {
     cloudName: "dkwlzwvfg", 
     uploadPreset: "goldenvip_uploads", 
-    adminPass: "Aneury00523", 
-    storageKey: "goldenvip_data_v2",
-    badgesKey: "goldenvip_member_badges_v4", // v4: Ahora incluye imagen y rol en el estado
-    logoKey: "goldenvip_logo_url_v1" // NUEVO: Clave para guardar la URL del logo
-  };
-  
-  // URL por defecto para el logo (la que está en el HTML)
-  const DEFAULT_LOGO_URL = "https://i.ibb.co/9kLqvRK0/image-removebg-preview.png";
-
-  // --- DATOS CENTRALIZADOS DE INSIGNIAS (LAS 23 NUEVAS) ---
-  const BADGE_DATA = {
-    // Insignias Generales (1-20)
-    'Heart': { name: 'Golden Heart', icon: '❤️', color: '#FF6B6B', desc: 'Reconoce el compañerismo, la buena energía y el apoyo constante dentro del equipo.' },
-    'Discipline': { name: 'VIP Discipline', icon: '🛡️', color: '#3A4164', desc: 'Otorgada por la puntualidad, constancia, responsabilidad y compromiso ejemplar.' },
-    'StepMaster': { name: 'Golden Step Master', icon: '👣', color: '#00BF63', desc: 'Para quienes dominan una coreografía con precisión, técnica y seguridad.' },
-    'EnergySpark': { name: 'VIP Energy Spark', icon: '🔥', color: '#FF5733', desc: 'Celebrate a quienes tienen una energía explosiva en ensayos y presentaciones.' },
-    'Leader': { name: 'Golden Leader', icon: '⭐', color: '#FFD700', desc: 'Para quien demuestra liderazgo positivo, guía, inspiración y capacidad de unir al grupo.' },
-    'Creativity': { name: 'VIP Creativity Flame', icon: '💡', color: '#8A2BE2', desc: 'Para la persona que aporta ideas brillantes en coreografías, vestuarios o producciones.' },
-    'SyncAward': { name: 'Golden Sync Award', icon: '🔗', color: '#33B5E5', desc: 'Premia una sincronización impecable y el trabajo en equipo dentro de las rutinas.' },
-    'GrowthMedal': { name: 'VIP Growth Medal', icon: '🌱', color: '#99CC00', desc: 'Para quien ha mostrado el mayor crecimiento técnico y personal en un determinado período.' },
-    'StageAura': { name: 'Golden Stage Aura', icon: '✨', color: '#FF8800', desc: 'Reconoce presencia escénica poderosa, carisma y dominio del escenario.' },
-    'RhythmPulse': { name: 'VIP Rhythm Pulse', icon: '🥁', color: '#E533FF', desc: 'Para quienes tienen un sentido del ritmo sobresaliente y una musicalidad natural.' },
-    'FocusShield': { name: 'Golden Focus Shield', icon: '🎯', color: '#0099CC', desc: 'Otorgada a quien mantiene concentración, actitud profesional y enfoque en los ensayos.' },
-    'RespectSeal': { name: 'VIP Respect Seal', icon: '🤝', color: '#6699FF', desc: 'Reconoce el respeto hacia compañeros, maestros, tiempos y espacios del grupo.' },
-    'ImpactMedal': { name: 'Golden Impact Medal', icon: '💥', color: '#FF3333', desc: 'Para quien genera un impacto memorable en una presentación clave o competencia.' },
-    'Resilience': { name: 'VIP Resilience Badge', icon: '💪', color: '#FF6600', desc: 'Para quien demuestra fortaleza, superación personal y capacidad de no rendirse.' },
-    'Harmony': { name: 'Golden Harmony Award', icon: '🕊️', color: '#CCCCCC', desc: 'Premia a quienes mantienen la armonía del equipo, evitando conflictos y promoviendo unión.' },
-    'StyleCrown': { name: 'VIP Style Crown', icon: '👑', color: '#FFB900', desc: 'Para quien destaca por su estilo personal único al bailar.' },
-    'Technique': { name: 'Golden Technique Star', icon: '⚙️', color: '#00CED1', desc: 'Otorgada a bailarines con técnica limpia, fuerte y bien controlada.' },
-    'Attendance': { name: 'VIP Attendance Honor', icon: '✅', color: '#4CAF50', desc: 'Para quienes mantienen asistencia impecable y responsabilidad total.' },
-    'Vision': { name: 'Golden Vision Badge', icon: '🔭', color: '#A020F0', desc: 'Para quien aporta ideas, visión artística y dirección para el futuro del grupo.' },
-    'TeamSoul': { name: 'VIP Team Soul', icon: '🔥', color: '#FF4500', desc: 'Para quien representa el alma del grupo GoldenVIP: pasión, unidad y compromiso.' },
-    // Insignias Especiales (21-23)
-    'Founder': { name: 'Founder Emblem', icon: '⚜️', color: '#D4AF37', desc: 'Distinción máxima reservada al fundador(a), símbolo del origen, legado y esencia del grupo.' },
-    'CEO': { name: 'Director CEO Seal', icon: '🔑', color: '#AA8C2C', desc: 'Reconoce al director/CEO por liderazgo, toma de decisiones y la dirección estratégica del equipo.' },
-    'Honor': { name: 'Golden Star Honor', icon: '🌟', color: '#FFD700', desc: 'La más alta condecoración; se otorga por contribuciones extraordinarias, excelencia y desempeño excepcional.' },
+    adminPass: "Aneury00523"
   };
   
   const GENERIC_MEMBER_IMAGE = "https://i.ibb.co/rQG572B/default-avatar.png";
 
-  // --- LÍDERES (Inicializados con MÚLTIPLES insignias específicas) ---
-  // AHORA CONTIENE TAMBIÉN EL ROL
-  const initialLeaders = [
-    { name: "Ane", role: "Fundador & CEO", image: "https://i.ibb.co/2Yp9yTSJ/572046583-17894645382346722-7376055665485380813-n.jpg", badges: ["Founder", "CEO", "Honor", "Leader", "TeamSoul"] },
-    { name: "Xina", role: "Directora Creativa", image: "https://i.ibb.co/0RNp2kJG/574772452-17902908456322829-4909915829936062184-n.jpg", badges: ["CEO", "Creativity", "StageAura", "Vision"] },
-    { name: "Creathoor", role: "Coordinador de Eventos", image: "https://i.ibb.co/5gwkp2sg/569279011-17924938857150409-2988309849469534930-n.jpg", badges: ["Heart", "Discipline", "SyncAward", "Attendance"] },
-  ];
-  
-  // MIEMBROS ELIMINADOS POR SOLICITUD DEL USUARIO
-  const initialMembers = []; 
+  // --- DATOS DE INSIGNIAS ---
+  const BADGE_DATA = {
+    'Heart': { name: 'Golden Heart', icon: '❤️', color: '#FF6B6B', desc: 'Reconoce el compañerismo.' },
+    'Discipline': { name: 'VIP Discipline', icon: '🛡️', color: '#3A4164', desc: 'Puntualidad y compromiso.' },
+    'StepMaster': { name: 'Golden Step Master', icon: '👣', color: '#00BF63', desc: 'Dominio de coreografía.' },
+    'EnergySpark': { name: 'VIP Energy Spark', icon: '🔥', color: '#FF5733', desc: 'Energía explosiva.' },
+    'Leader': { name: 'Golden Leader', icon: '⭐', color: '#FFD700', desc: 'Liderazgo positivo.' },
+    'Creativity': { name: 'VIP Creativity Flame', icon: '💡', color: '#8A2BE2', desc: 'Ideas brillantes.' },
+    'SyncAward': { name: 'Golden Sync Award', icon: '🔗', color: '#33B5E5', desc: 'Sincronización impecable.' },
+    'GrowthMedal': { name: 'VIP Growth Medal', icon: '🌱', color: '#99CC00', desc: 'Mayor crecimiento.' },
+    'StageAura': { name: 'Golden Stage Aura', icon: '✨', color: '#FF8800', desc: 'Presencia escénica.' },
+    'RhythmPulse': { name: 'VIP Rhythm Pulse', icon: '🥁', color: '#E533FF', desc: 'Sentido del ritmo.' },
+    'FocusShield': { name: 'Golden Focus Shield', icon: '🎯', color: '#0099CC', desc: 'Concentración total.' },
+    'RespectSeal': { name: 'VIP Respect Seal', icon: '🤝', color: '#6699FF', desc: 'Respeto al equipo.' },
+    'ImpactMedal': { name: 'Golden Impact Medal', icon: '💥', color: '#FF3333', desc: 'Impacto memorable.' },
+    'Resilience': { name: 'VIP Resilience Badge', icon: '💪', color: '#FF6600', desc: 'Fortaleza y superación.' },
+    'Harmony': { name: 'Golden Harmony Award', icon: '🕊️', color: '#CCCCCC', desc: 'Mantiene la armonía.' },
+    'StyleCrown': { name: 'VIP Style Crown', icon: '👑', color: '#FFB900', desc: 'Estilo único.' },
+    'Technique': { name: 'Golden Technique Star', icon: '⚙️', color: '#00CED1', desc: 'Técnica limpia.' },
+    'Attendance': { name: 'VIP Attendance Honor', icon: '✅', color: '#4CAF50', desc: 'Asistencia perfecta.' },
+    'Vision': { name: 'Golden Vision Badge', icon: '🔭', color: '#A020F0', desc: 'Visión de futuro.' },
+    'TeamSoul': { name: 'VIP Team Soul', icon: '🔥', color: '#FF4500', desc: 'Alma del grupo.' },
+    'Founder': { name: 'Founder Emblem', icon: '⚜️', color: '#D4AF37', desc: 'Distinción máxima al fundador.' },
+    'CEO': { name: 'Director CEO Seal', icon: '🔑', color: '#AA8C2C', desc: 'Liderazgo estratégico.' },
+    'Honor': { name: 'Golden Star Honor', icon: '🌟', color: '#FFD700', desc: 'Excelencia extraordinaria.' }
+  };
 
-  // --- ESTADO ---
   let state = {
     items: [],
-    memberBadges: [], // CADA ELEMENTO: { name: string, badges: string[], image: string, role: string }
-    logoUrl: DEFAULT_LOGO_URL, // NUEVO: Almacena la URL del logo
+    memberBadges: [],
+    logoUrl: "https://i.ibb.co/9kLqvRK0/image-removebg-preview.png",
     isAdmin: false,
     pendingFile: null
   };
-
-  // --- ELEMENTOS DOM ---
+  
+  // --- ELEMENTOS DOM (ACTUALIZADO) ---
   const els = {
     grid: document.getElementById('galleryGrid'),
     stats: document.getElementById('galleryStats'),
@@ -649,13 +675,11 @@
     loginModal: document.getElementById('loginModal'),
     uploadModal: document.getElementById('uploadModal'),
     badgesModal: document.getElementById('badgesModal'),
-    // Elementos de Modales de Administración:
-    imageModal: document.getElementById('imageModal'), // NUEVO
-    logoModal: document.getElementById('logoModal'), // NUEVO
-    siteLogo: document.getElementById('siteLogo'), // NUEVO (ID añadido al img del logo)
-    manageLogoBtn: document.getElementById('manageLogoBtn'), // NUEVO
-    manageImagesBtn: document.getElementById('manageImagesBtn'), // NUEVO
-    // Inputs/Outputs de Modales:
+    profileModal: document.getElementById('profileModal'), // NEW
+    logoModal: document.getElementById('logoModal'),
+    siteLogo: document.getElementById('siteLogo'),
+    manageLogoBtn: document.getElementById('manageLogoBtn'),
+    manageProfilesBtn: document.getElementById('manageProfilesBtn'), // RENAMED
     adminPassInput: document.getElementById('adminPassInput'),
     mediaTitleInput: document.getElementById('mediaTitleInput'),
     manageBadgesBtn: document.getElementById('manageBadgesBtn'),
@@ -666,631 +690,463 @@
     rankedMemberList: document.getElementById('rankedMemberList'),
     currentMemberBadges: document.getElementById('currentMemberBadges'),
     badgeGuideGrid: document.getElementById('badgeGuideGrid'),
-    // Inputs para Gestión de Imágenes
-    imageUsernameInput: document.getElementById('imageUsernameInput'), // NUEVO
-    newImageUrlInput: document.getElementById('newImageUrlInput'), // NUEVO
-    updateImageBtn: document.getElementById('updateImageBtn'), // NUEVO
-    newLogoUrlInput: document.getElementById('newLogoUrlInput'), // NUEVO
+    // Profile Modal Elements (NEW/RENAMED)
+    profileMemberSelect: document.getElementById('profileMemberSelect'),
+    profileEditForm: document.getElementById('profileEditForm'),
+    editNameInput: document.getElementById('editNameInput'),
+    editRoleInput: document.getElementById('editRoleInput'),
+    editImageUrlInput: document.getElementById('editImageUrlInput'),
+    updateProfileBtn: document.getElementById('updateProfileBtn'),
+    deleteMemberBtn: document.getElementById('deleteMemberBtn'),
+    closeProfileBtn: document.getElementById('closeProfileBtn'),
+    // New Member Creation Elements (NEW)
+    newNameInput: document.getElementById('newNameInput'),
+    newRoleInput: document.getElementById('newRoleInput'),
+    newImageUrlInput: document.getElementById('newImageUrlInput'),
+    createMemberBtn: document.getElementById('createMemberBtn'),
+    //
+    newLogoUrlInput: document.getElementById('newLogoUrlInput'),
     mobileMenuBtn: document.getElementById('mobileMenuBtn'),
     mainNav: document.querySelector('#mainNav')
   };
 
-  // --- FUNCIONES DE ALMACENAMIENTO ---
+  // --- LOGICA PRINCIPAL ---
   
-  function saveLogo() {
-      localStorage.setItem(CONFIG.logoKey, state.logoUrl);
-      updateLogo();
-  }
-  
-  function updateLogo() {
-      els.siteLogo.src = state.logoUrl;
-  }
-  
-  function loadData(){
-    // 1. Cargar Logo
-    const savedLogo = localStorage.getItem(CONFIG.logoKey);
-    state.logoUrl = savedLogo || DEFAULT_LOGO_URL;
-    updateLogo(); // Aplicar el logo guardado
-
-    // 2. Cargar Galería
-    const rawItems = localStorage.getItem(CONFIG.storageKey);
-    state.items = rawItems ? JSON.parse(rawItems) : [];
-    
-    // 3. Cargar Insignias y Perfiles
-    let rawBadges = localStorage.getItem(CONFIG.badgesKey);
-    
-    if (!rawBadges) {
-        state.memberBadges = [];
-        const initialNames = new Set();
-
-        // 1. Inicializar Líderes con sus insignias, imagen y rol predefinidos
-        initialLeaders.forEach(l => {
-            state.memberBadges.push({ 
-                name: l.name, 
-                badges: l.badges || [], 
-                image: l.image, // URL de imagen del líder
-                role: l.role // Rol del líder
-            });
-            initialNames.add(l.name.toLowerCase());
-        });
-        
-        // 2. Inicializar Miembros (vacío o con initialMembers)
-        initialMembers.forEach(m => {
-            if (!initialNames.has(m.name.toLowerCase())) {
-                 state.memberBadges.push({ 
-                     name: m.name, 
-                     badges: [], 
-                     image: m.image || GENERIC_MEMBER_IMAGE,
-                     role: m.role || 'Talento Asignado'
-                 }); 
-            }
-        });
-        saveBadges();
-    } else {
-        state.memberBadges = JSON.parse(rawBadges);
-        
-        // Fix para cargar datos faltantes (role/image) si no existían en versiones anteriores
-        state.memberBadges = state.memberBadges.map(m => {
-            const initialLeader = initialLeaders.find(l => l.name.toLowerCase() === m.name.toLowerCase());
-            
-            return {
-                name: m.name,
-                badges: m.badges,
-                image: m.image || (initialLeader ? initialLeader.image : GENERIC_MEMBER_IMAGE),
-                role: m.role || (initialLeader ? initialLeader.role : 'Talento Asignado')
-            };
-        });
-        saveBadges(); // Guardar para asegurar la estructura v4
-    }
-    
-    renderGallery();
-    renderTeam();
-    renderMembers();
-    renderBadgeGuide();
-  }
-
-  function saveData(){
-    localStorage.setItem(CONFIG.storageKey, JSON.stringify(state.items));
-    updateStats();
-  }
-  
-  function saveBadges(){ 
-      localStorage.setItem(CONFIG.badgesKey, JSON.stringify(state.memberBadges));
-  }
-
-  // --- FUNCIONES UTILITARIAS ---
-  
-  function getBadgeData(badgeKey) {
-      return BADGE_DATA[badgeKey] || { name: 'Desconocido', icon: '❓', color: '#555' };
-  }
-
-  function getMemberBadges(name) {
-    const member = state.memberBadges.find(m => m.name.toLowerCase() === name.toLowerCase());
-    return member ? member.badges : [];
-  }
-  
-  function getMemberData(name) {
-      const member = state.memberBadges.find(m => m.name.toLowerCase() === name.toLowerCase());
-      // Si el miembro existe, retorna sus datos
-      if (member) return member;
-
-      // Si no existe, revisa si es un líder inicial para datos de fallback
-      const initialLeader = initialLeaders.find(l => l.name.toLowerCase() === name.toLowerCase());
-      if (initialLeader) return { 
-          name: initialLeader.name, 
-          badges: getMemberBadges(name), // Usar las insignias persistidas
-          image: initialLeader.image, 
-          role: initialLeader.role 
-      };
-      
-      // Si no es ninguno, retorna una estructura básica
-      return { 
-          name: name, 
-          badges: [], 
-          image: GENERIC_MEMBER_IMAGE, 
-          role: 'Nuevo Miembro'
-      };
-  }
-  
-  // NUEVA: Obtiene la URL de la imagen del miembro/líder
-  function getMemberImage(name) {
-      const data = getMemberData(name);
-      return data.image || GENERIC_MEMBER_IMAGE;
-  }
-  
-  // Crea una lista de TODOS los miembros de talento (excluyendo líderes iniciales)
-  function getDisplayMembers() {
-    const leaderNames = new Set(initialLeaders.map(l => l.name.toLowerCase()));
-    
-    // Obtenemos todos los miembros que están en el array dinámico (tengan o no insignias)
-    // y no son parte de initialLeaders.
-    const uniqueMembers = state.memberBadges
-        .filter(m => !leaderNames.has(m.name.toLowerCase()) && m.badges.length > 0)
-        .map(m => ({
-            name: m.name,
-            role: m.role || 'Talento Asignado', 
-            image: m.image || GENERIC_MEMBER_IMAGE
-        }))
-        .sort((a, b) => a.name.localeCompare(b.name));
-    
-    return uniqueMembers;
-  }
-  
-  function populateBadgeSelect() {
-      const select = els.memberBadgeSelect;
-      select.innerHTML = '<option value="">(Seleccionar Insignia)</option>';
-      Object.keys(BADGE_DATA).forEach(key => {
-          const data = BADGE_DATA[key];
-          const option = document.createElement('option');
-          option.value = key;
-          option.textContent = `${data.icon} ${data.name}`;
-          select.appendChild(option);
-      });
-  }
-
-
-  // --- RENDERING ---
-
-  function createBadgeHtml(badgesArray, isLeader = false) {
-      if (badgesArray.length === 0) {
-          return '';
+  async function loadData(){
+    console.log("🔄 Sincronizando datos...");
+    try {
+      // 1. Logo
+      const { data: configData } = await supabaseClient.from('config').select('*').eq('key', 'site_logo').single();
+      if(configData) {
+        state.logoUrl = configData.value;
+        els.siteLogo.src = state.logoUrl;
       }
-      const badgeSize = isLeader ? '24px' : '20px';
+
+      // 2. Miembros
+      const { data: membersData } = await supabaseClient.from('members').select('*');
+      if(membersData) state.memberBadges = membersData;
       
-      const badgesHtml = badgesArray.map(badgeKey => {
-          const data = getBadgeData(badgeKey);
-          return `<div class="multi-badge" style="
-                      background-color:${data.color}; 
-                      width:${badgeSize}; height:${badgeSize}; font-size: ${isLeader ? '12px' : '10px'};
-                  " title="${data.name}: ${data.desc}">
-                      ${data.icon}
-                  </div>`;
-      }).join('');
+      // 3. Galería
+      const { data: galleryData } = await supabaseClient.from('gallery').select('*').order('created_at', { ascending: true });
+      if(galleryData) state.items = galleryData;
       
-      return `<div class="badge-list">${badgesHtml}</div>`;
-  }
-  
-  function renderBadgeGuide() {
-      els.badgeGuideGrid.innerHTML = '';
-      Object.keys(BADGE_DATA).forEach(key => {
-          const data = BADGE_DATA[key];
-          const item = document.createElement('div');
-          item.className = 'badge-guide-item fade-in';
-          item.innerHTML = `
-              <div class="badge-icon-wrap" style="background-color: ${data.color}; color: ${data.color === '#CCCCCC' ? '#000' : '#fff'};">
-                  ${data.icon}
-              </div>
-              <div class="badge-guide-text">
-                  <h4>${data.name}</h4>
-                  <p>${data.desc}</p>
-              </div>
-          `;
-          els.badgeGuideGrid.appendChild(item);
-          observer.observe(item);
-      });
+      // Render
+      renderGallery();
+      renderTeam();
+      renderMembers();
+      renderBadgeGuide();
+      
+    } catch(err) {
+      console.error("❌ Error en loadData:", err);
+    }
   }
 
-  // Renderizar Equipo (Líderes)
+  // Helper para saber si es Líder
+  function isLeader(m) {
+      const b = m.badges || [];
+      const r = (m.role || '').toLowerCase();
+      // Si tiene insignia de poder o rol de director/lider
+      return b.includes('CEO') || b.includes('Founder') || b.includes('Leader') || r.includes('director') || r.includes('lider');
+  }
+
+  function createBadgeHtml(badgesArray) {
+    if (!badgesArray || !Array.isArray(badgesArray) || badgesArray.length === 0) {
+        return '<div class="badge-list" style="min-height: 24px;"></div>'; 
+    }
+    const badgesHtml = badgesArray.map(badgeKey => {
+      const data = BADGE_DATA[badgeKey] || { name: '?', icon: '?', color: '#555' };
+      return `<div class="multi-badge" style="background:${data.color};" title="${data.name}">${data.icon}</div>`;
+    }).join('');
+    return `<div class="badge-list">${badgesHtml}</div>`;
+  }
+
+  function renderBadgeGuide() {
+    els.badgeGuideGrid.innerHTML = '';
+    Object.keys(BADGE_DATA).forEach(key => {
+      const data = BADGE_DATA[key];
+      const item = document.createElement('div');
+      item.className = 'badge-guide-item';
+      item.innerHTML = `
+        <div class="badge-icon-wrap" style="background-color: ${data.color}; color: ${data.color === '#CCCCCC' ? '#000' : '#fff'};">${data.icon}</div>
+        <div class="badge-guide-text"><h4>${data.name}</h4><p>${data.desc}</p></div>`;
+      els.badgeGuideGrid.appendChild(item);
+    });
+  }
+
   function renderTeam() {
     els.leaderWrap.innerHTML = '';
+    const leaders = state.memberBadges.filter(isLeader);
     
-    initialLeaders.forEach(leader => {
-        const data = getMemberData(leader.name); // Obtiene los datos, incluyendo la imagen actualizada si la hay
-        const badges = data.badges;
-        const badgeHtml = createBadgeHtml(badges, true);
-        const imageURL = data.image;
-
-        const div = document.createElement('div');
-        div.className = 'leader fade-in';
-        div.innerHTML = `
-            <img src="${imageURL}" alt="${leader.name}">
-            <h4>${leader.name}</h4>
-            <span class="leader-role">${data.role}</span>
-            ${badgeHtml}
-        `;
-        els.leaderWrap.appendChild(div);
+    leaders.forEach(leader => {
+      const div = document.createElement('div');
+      div.className = 'leader'; // Sin fade-in dinámico
+      div.innerHTML = `
+        <img src="${leader.image || GENERIC_MEMBER_IMAGE}" alt="${leader.name}">
+        <h4>${leader.name}</h4>
+        <span class="leader-role">${leader.role || 'Líder VIP'}</span>
+        ${createBadgeHtml(leader.badges)}
+      `;
+      els.leaderWrap.appendChild(div);
     });
-    document.querySelectorAll('.leader.fade-in').forEach(el => observer.observe(el));
   }
 
-  // Renderizar Miembros Normales
   function renderMembers() {
-      els.membersGrid.innerHTML = '';
-      const displayMembers = getDisplayMembers();
-      
-      displayMembers.forEach(member => {
-          const data = getMemberData(member.name); // Obtiene los datos, incluyendo la imagen actualizada si la hay
-          const badges = data.badges;
-          const badgeHtml = createBadgeHtml(badges);
-          const imageURL = data.image;
-          
-          const div = document.createElement('div');
-          div.className = 'member-card fade-in';
-          div.innerHTML = `
-              <img src="${imageURL}" alt="${member.name}">
-              <h4>${member.name}</h4>
-              <span class="member-role">${data.role}</span>
-              ${badgeHtml}
-          `;
-          els.membersGrid.appendChild(div);
-      });
-      
-      document.querySelectorAll('.member-card.fade-in').forEach(el => observer.observe(el));
-      
-      if (els.membersGrid.children.length === 0) {
-         els.membersGrid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:#444; padding:20px;">Actualmente no hay miembros de talento listados con condecoraciones.</p>`;
-      }
+    els.membersGrid.innerHTML = '';
+    const members = state.memberBadges.filter(m => !isLeader(m));
+    
+    if (members.length === 0) {
+      els.membersGrid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:#444;">No hay miembros listados aún.</p>`;
+      return;
+    }
+
+    members.forEach(member => {
+      const div = document.createElement('div');
+      div.className = 'member-card'; // Sin fade-in dinámico
+      div.innerHTML = `
+        <img src="${member.image || GENERIC_MEMBER_IMAGE}" alt="${member.name}">
+        <h4>${member.name}</h4>
+        <span class="member-role">${member.role || 'Miembro Oficial'}</span>
+        ${createBadgeHtml(member.badges)}
+      `;
+      els.membersGrid.appendChild(div);
+    });
   }
   
   function renderGallery(){
     els.grid.innerHTML = "";
     if(state.items.length === 0){
-      els.grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:#444; padding:20px;">La galería está vacía. Esperando contenido brillante.</p>`;
+      els.grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:#444;">La galería está vacía.</p>`;
+      return;
     }
-    
-    state.items.slice().reverse().forEach(item => {
+    [...state.items].reverse().forEach(item => {
       const div = document.createElement('div');
       div.className = 'media-item';
-      
-      let contentHtml = '';
-      if(item.type === 'video'){
-        contentHtml = `<video src="${item.url}" controls preload="metadata"></video>`;
-      } else {
-        contentHtml = `<img src="${item.url}" alt="${item.title}" loading="lazy">`;
-      }
-
+      let contentHtml = item.type === 'video' 
+        ? `<video src="${item.url}" controls autoplay style="max-width:100%;max-height:90vh;border-radius:8px;"></video>` 
+        : `<img src="${item.url}" alt="${item.title}" loading="lazy">`;
       let adminHtml = state.isAdmin ? 
-        `<button class="btn-icon" onclick="deleteItem('${item.id}')" title="Borrar">🗑️</button>` : '';
-
+        `<button class="btn-icon" onclick="deleteItem(${item.id})" title="Borrar">🗑️</button>` : '';
       div.innerHTML = `
         ${contentHtml}
         <div class="media-overlay">
-          <span class="media-title">${item.title}</span>
+          <span class="media-title">${item.title || 'Sin título'}</span>
           <div style="display:flex; gap:5px;">
-             <button class="btn-icon" onclick="viewItem('${item.url}', '${item.type}')">👁️</button>
-             ${adminHtml}
+            <button class="btn-icon" onclick="viewItem('${item.url}', '${item.type}')">👁️</button>
+            ${adminHtml}
           </div>
-        </div>
-      `;
+        </div>`;
       els.grid.appendChild(div);
     });
     updateStats();
   }
-  
+
   function renderRankedMemberList() {
-      els.rankedMemberList.innerHTML = '';
-      
-      state.memberBadges.filter(m => m.badges.length > 0).sort((a, b) => a.name.localeCompare(b.name)).forEach(member => {
-          const badgesCount = member.badges.length;
-          
-          const div = document.createElement('div');
-          div.className = 'member-list-item';
-          div.innerHTML = `
-              <span>**${member.name}** (${badgesCount} insignias)</span>
-              <button onclick="editMemberBadges('${member.name}')">Administrar</button>
-          `;
-          els.rankedMemberList.appendChild(div);
-      });
-      
-      if (els.rankedMemberList.innerHTML === '') {
-          els.rankedMemberList.innerHTML = '<p style="color:#666; padding-left:10px;">No hay miembros con insignias asignadas.</p>';
-      }
+    els.rankedMemberList.innerHTML = '';
+    state.memberBadges.sort((a, b) => a.name.localeCompare(b.name)).forEach(member => {
+      const div = document.createElement('div');
+      div.className = 'member-list-item';
+      const badgeCount = member.badges ? member.badges.length : 0;
+      div.innerHTML = `<span>**${member.name}** (${badgeCount} insignias)</span>
+                       <button onclick="editMemberBadges('${member.name}')">Administrar</button>`;
+      els.rankedMemberList.appendChild(div);
+    });
   }
 
   function displayCurrentBadges(name) {
-    const badges = getMemberBadges(name);
+    const member = state.memberBadges.find(m => m.name.toLowerCase() === name.toLowerCase());
     els.currentMemberBadges.innerHTML = '';
-
-    if (badges.length === 0) {
-        els.currentMemberBadges.innerHTML = '<p style="color:#888; font-size: 13px;">Este miembro no tiene insignias.</p>';
-        return;
+    if (!member || !member.badges || member.badges.length === 0) {
+      els.currentMemberBadges.innerHTML = '<p style="color:#888;">Sin insignias.</p>';
+      return;
     }
-
-    badges.forEach(badgeKey => {
-        const data = getBadgeData(badgeKey);
-        const span = document.createElement('span');
-        span.className = 'current-badge';
-        span.innerHTML = `${data.icon} ${data.name}`;
-        els.currentMemberBadges.appendChild(span);
+    member.badges.forEach(badgeKey => {
+      const data = BADGE_DATA[badgeKey] || { name: '?', icon: '?', color: '#555' };
+      const span = document.createElement('span');
+      span.className = 'current-badge';
+      span.innerHTML = `${data.icon} ${data.name}`;
+      els.currentMemberBadges.appendChild(span);
     });
   }
   
-  window.editMemberBadges = function(name) {
-      els.memberUsernameInput.value = name;
-      displayCurrentBadges(name);
-  };
-  
-  // --- ACCIONES ADMIN (Logo Management) ---
-
-  els.manageLogoBtn.addEventListener('click', () => {
-      els.newLogoUrlInput.value = state.logoUrl;
-      els.logoModal.style.display = 'flex';
-  });
-  
-  document.getElementById('closeLogoBtn').onclick = () => els.logoModal.style.display = 'none';
-
-  document.getElementById('updateLogoBtn').addEventListener('click', () => {
-      const newUrl = els.newLogoUrlInput.value.trim();
-      if (!newUrl) {
-          alert('Debes ingresar una URL válida.');
-          return;
-      }
-      state.logoUrl = newUrl;
-      saveLogo();
-      els.logoModal.style.display = 'none';
-      alert('Logo actualizado con éxito ✅');
-  });
-
-  // --- ACCIONES ADMIN (Image Management) ---
-  
-  els.manageImagesBtn.addEventListener('click', () => {
-      els.imageUsernameInput.value = '';
-      els.newImageUrlInput.value = '';
-      els.imageModal.style.display = 'flex';
-  });
-
-  document.getElementById('closeImageBtn').onclick = () => els.imageModal.style.display = 'none';
-
-  els.updateImageBtn.addEventListener('click', () => {
-      const name = els.imageUsernameInput.value.trim();
-      const newImageURL = els.newImageUrlInput.value.trim();
-      
-      if (!name || !newImageURL) {
-          alert('Debes ingresar el nombre y una URL de imagen válida.');
-          return;
-      }
-      
-      let member = state.memberBadges.find(m => m.name.toLowerCase() === name.toLowerCase());
-      
-      if (!member) {
-          // Si el miembro no existe, lo añadimos como un nuevo miembro sin insignias y con la nueva imagen/rol genérico.
-          member = { 
-              name: name, 
-              badges: [], 
-              image: newImageURL, 
-              role: 'Talento Asignado' 
-          };
-          state.memberBadges.push(member);
-      } else {
-          // Si existe, actualizamos la URL de la imagen.
-          member.image = newImageURL;
-          // Si el rol está vacío, darle un valor por defecto.
-          if (!member.role) member.role = 'Talento Asignado';
-      }
-
-      saveBadges(); 
-      renderTeam(); 
-      renderMembers();
-      
-      els.imageModal.style.display = 'none';
-      alert(`Imagen de perfil para ${name} actualizada con éxito ✅`);
-  });
-
-
-  // --- ACCIONES ADMIN (Badge Management) ---
-
-  els.manageBadgesBtn.addEventListener('click', () => {
-    populateBadgeSelect();
-    renderRankedMemberList();
-    els.badgesModal.style.display = 'flex';
-  });
-
-  document.getElementById('closeBadgesBtn').onclick = () => els.badgesModal.style.display = 'none';
-
-  // Lógica de AGREGAR Insignia
-  els.addBadgeBtn.addEventListener('click', () => {
-      const name = els.memberUsernameInput.value.trim();
-      const badgeKey = els.memberBadgeSelect.value;
-      
-      if (!name || !badgeKey) {
-          alert('Debes ingresar el nombre y seleccionar una insignia.');
-          return;
-      }
-      
-      let member = state.memberBadges.find(m => m.name.toLowerCase() === name.toLowerCase());
-      
-      if (!member) {
-          // Si el miembro no existe, lo creamos con insignia, imagen genérica y rol.
-          member = { 
-              name: name, 
-              badges: [], 
-              image: GENERIC_MEMBER_IMAGE, 
-              role: 'Talento Asignado' 
-          };
-          state.memberBadges.push(member);
-      }
-      
-      if (!member.badges.includes(badgeKey)) {
-          member.badges.push(badgeKey);
-          saveBadges();
-          renderRankedMemberList();
-          renderTeam(); 
-          renderMembers();
-          displayCurrentBadges(name);
-          alert(`Insignia ${getBadgeData(badgeKey).name} agregada a ${name} ✅`);
-      } else {
-          alert(`${name} ya tiene la insignia ${getBadgeData(badgeKey).name}.`);
-      }
-  });
-
-  // Lógica de ELIMINAR Insignia
-  els.removeBadgeBtn.addEventListener('click', () => {
-      const name = els.memberUsernameInput.value.trim();
-      const badgeKey = els.memberBadgeSelect.value;
-      
-      if (!name || !badgeKey) {
-          alert('Debes ingresar el nombre y seleccionar una insignia a eliminar.');
-          return;
-      }
-      
-      const member = state.memberBadges.find(m => m.name.toLowerCase() === name.toLowerCase());
-      
-      if (member && member.badges.includes(badgeKey)) {
-          member.badges = member.badges.filter(b => b !== badgeKey);
-          
-          saveBadges();
-          renderRankedMemberList();
-          renderTeam(); 
-          renderMembers();
-          displayCurrentBadges(name);
-          alert(`Insignia ${getBadgeData(badgeKey).name} eliminada de ${name} 🗑️`);
-      } else {
-          alert(`${name} no tiene la insignia ${getBadgeData(badgeKey).name}.`);
-      }
-  });
-  
-  // Actualizar insignias al escribir el nombre
-  els.memberUsernameInput.addEventListener('input', () => {
-      const name = els.memberUsernameInput.value.trim();
-      displayCurrentBadges(name);
-  });
-  
-  // Actualizar insignias al seleccionar
-  els.memberBadgeSelect.addEventListener('change', () => {
-      const name = els.memberUsernameInput.value.trim();
-      if (name) displayCurrentBadges(name);
-  });
-  
-
-  // --- OTRAS ACCIONES (Mantenidas) ---
-  window.deleteItem = function(id){
-    if(!confirm("¿Seguro que quieres borrar este recuerdo?")) return;
-    state.items = state.items.filter(i => i.id !== id);
-    saveData();
-    renderGallery();
-  };
-
-  window.viewItem = function(url, type){
-    const overlay = document.createElement('div');
-    overlay.style = "position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;";
-    
-    const content = type === 'video' 
-      ? `<video src="${url}" controls autoplay style="max-width:100%;max-height:90vh;border-radius:8px;box-shadow:0 0 30px rgba(212,175,55,0.2)"></video>`
-      : `<img src="${url}" style="max-width:100%;max-height:90vh;border-radius:8px;box-shadow:0 0 30px rgba(212,175,55,0.2)">`;
-
-    overlay.innerHTML = `
-      <div style="position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
-        ${content}
-        <button id="closeLightbox" style="position:absolute; top:20px; right:20px; background:none; border:0; color:white; font-size:30px; cursor:pointer;">&times;</button>
-      </div>
-    `;
-    
-    document.body.appendChild(overlay);
-    overlay.querySelector('#closeLightbox').onclick = () => overlay.remove();
-    overlay.onclick = (e) => { if(e.target === overlay || e.target.parentElement === overlay) overlay.remove(); }
-  };
-  
-  function updateStats(){
-    const imgs = state.items.filter(i => i.type !== 'video').length;
-    const vids = state.items.filter(i => i.type === 'video').length;
-    els.stats.textContent = `${imgs} Capturas · ${vids} Clips`;
+  // Función para rellenar el selector de perfiles en el modal de gestión de perfiles
+  function populateProfileSelect() {
+    els.profileMemberSelect.innerHTML = '<option value="">(Seleccionar Perfil para Editar)</option>';
+    state.memberBadges.sort((a, b) => a.name.localeCompare(b.name)).forEach(member => {
+        const option = document.createElement('option');
+        option.value = member.id; 
+        option.textContent = `${member.name} (${member.role || 'Sin Rol'})`;
+        els.profileMemberSelect.appendChild(option);
+    });
   }
 
-  // --- SUBIDA DE ARCHIVOS (Cloudinary) ---
-  els.fileInput.addEventListener('change', (e) => {
-    if(e.target.files[0]){
-      state.pendingFile = e.target.files[0];
-      els.mediaTitleInput.value = "";
-      els.uploadModal.style.display = 'flex';
+  // --- ADMIN ACTIONS ---
+  
+  // 1. Logo
+  document.getElementById('updateLogoBtn').addEventListener('click', async () => {
+    const newUrl = els.newLogoUrlInput.value.trim();
+    if (!newUrl) return alert('URL inválida');
+    const { error } = await supabaseClient.from('config').upsert({ key: 'site_logo', value: newUrl });
+    if(!error){
+      alert('Logo actualizado ✅');
+      els.logoModal.style.display = 'none';
+      await loadData(); // Recarga
     }
   });
 
+  // 2. Gestionar Perfiles (Nuevo)
+  els.manageProfilesBtn.onclick = () => { 
+    populateProfileSelect();
+    els.profileModal.style.display = 'flex'; 
+    els.profileEditForm.classList.add('hidden'); // Ocultar formulario al abrir
+    // Clear New Profile form
+    els.newNameInput.value = '';
+    els.newRoleInput.value = '';
+    els.newImageUrlInput.value = '';
+  };
+  els.closeProfileBtn.onclick = () => els.profileModal.style.display = 'none';
+
+  els.profileMemberSelect.onchange = () => {
+    const memberId = els.profileMemberSelect.value;
+    if (!memberId) {
+        els.profileEditForm.classList.add('hidden');
+        return;
+    }
+    const member = state.memberBadges.find(m => m.id.toString() === memberId);
+    if (member) {
+        els.editNameInput.value = member.name;
+        els.editRoleInput.value = member.role || '';
+        els.editImageUrlInput.value = member.image || GENERIC_MEMBER_IMAGE;
+        els.profileEditForm.classList.remove('hidden');
+    }
+  };
+
+  els.updateProfileBtn.addEventListener('click', async () => {
+    const memberId = els.profileMemberSelect.value;
+    const newName = els.editNameInput.value.trim();
+    const newRole = els.editRoleInput.value.trim();
+    const newImage = els.editImageUrlInput.value.trim();
+
+    if (!memberId || !newName) return alert('Nombre es obligatorio.');
+
+    const { error } = await supabaseClient.from('members').update({ 
+        name: newName, 
+        role: newRole, 
+        image: newImage 
+    }).eq('id', memberId);
+
+    if(!error) {
+        alert('Perfil actualizado ✅');
+        await loadData(); // Recarga
+        populateProfileSelect(); // Actualiza la lista
+        els.profileMemberSelect.value = memberId; // Mantiene seleccionado el miembro editado
+    } else {
+        alert('Error al actualizar: ' + error.message);
+    }
+  });
+
+  els.deleteMemberBtn.addEventListener('click', async () => {
+    const memberId = els.profileMemberSelect.value;
+    const memberName = els.editNameInput.value;
+    
+    if (!memberId) return;
+
+    if(confirm(`¿Estás seguro de ELIMINAR permanentemente a ${memberName} y todos sus datos? Esta acción no se puede deshacer.`)) {
+        const { error } = await supabaseClient.from('members').delete().eq('id', memberId);
+        
+        if(!error) {
+            alert(`Miembro ${memberName} eliminado 🗑️`);
+            await loadData(); // Recarga
+            els.profileModal.style.display = 'none';
+        } else {
+            alert('Error al eliminar: ' + error.message);
+        }
+    }
+  });
+  
+  // New Member Creation Logic
+  els.createMemberBtn.addEventListener('click', async () => {
+      const newName = els.newNameInput.value.trim();
+      const newRole = els.newRoleInput.value.trim() || 'Miembro Oficial';
+      const newImage = els.newImageUrlInput.value.trim() || GENERIC_MEMBER_IMAGE;
+      
+      if (!newName) return alert('El nombre es obligatorio para crear un perfil.');
+
+      // Check for existing member with the same name (case-insensitive for a simple check)
+      const existingMember = state.memberBadges.find(m => m.name.toLowerCase() === newName.toLowerCase());
+      if (existingMember) return alert(`Ya existe un miembro con el nombre "${newName}".`);
+      
+      const { error } = await supabaseClient.from('members').insert([{ 
+          name: newName, 
+          role: newRole, 
+          image: newImage,
+          badges: []
+      }]);
+
+      if(!error) {
+          alert(`Perfil de ${newName} creado exitosamente ✅`);
+          
+          // Clear inputs
+          els.newNameInput.value = '';
+          els.newRoleInput.value = '';
+          els.newImageUrlInput.value = '';
+
+          await loadData(); // Recarga
+          populateProfileSelect(); // Actualiza la lista para edición
+      } else {
+          alert('Error al crear perfil: ' + error.message);
+      }
+  });
+
+
+  // 3. Agregar Insignia
+  els.addBadgeBtn.addEventListener('click', async () => {
+    const name = els.memberUsernameInput.value.trim();
+    const badgeKey = els.memberBadgeSelect.value;
+    if (!name || !badgeKey) return alert('Faltan datos');
+
+    let member = state.memberBadges.find(m => m.name.toLowerCase() === name.toLowerCase());
+
+    if (!member) {
+      // Crear nuevo
+      const { error } = await supabaseClient.from('members').insert([{ name: name, image: GENERIC_MEMBER_IMAGE, badges: [badgeKey], role: 'Talento Asignado' }]);
+      if(!error) alert('Miembro creado e insignia asignada ✅');
+    } else {
+      // Actualizar
+      let currentBadges = member.badges || [];
+      if(!currentBadges.includes(badgeKey)){
+        const newBadges = [...currentBadges, badgeKey];
+        const { error } = await supabaseClient.from('members').update({ badges: newBadges }).eq('id', member.id);
+        if(!error) alert('Insignia agregada ✅');
+      } else {
+        alert('Este miembro ya tiene esa insignia');
+      }
+    }
+    // RECARGA COMPLETA PARA QUE SALGA EN LA COMUNIDAD
+    await loadData(); 
+    displayCurrentBadges(name); 
+    renderRankedMemberList();
+  });
+
+  // 4. Remover Insignia
+  els.removeBadgeBtn.addEventListener('click', async () => {
+    const name = els.memberUsernameInput.value.trim();
+    const badgeKey = els.memberBadgeSelect.value;
+    let member = state.memberBadges.find(m => m.name.toLowerCase() === name.toLowerCase());
+    
+    if(member && member.badges && member.badges.includes(badgeKey)){
+      const newBadges = member.badges.filter(b => b !== badgeKey);
+      const { error } = await supabaseClient.from('members').update({ badges: newBadges }).eq('id', member.id);
+      if(!error){
+        alert('Insignia retirada 🗑️');
+        await loadData(); // Recarga
+        displayCurrentBadges(name); 
+        renderRankedMemberList();
+      }
+    }
+  });
+
+  // 5. Galería - Borrar
+  window.deleteItem = async function(id){
+    if(!confirm("¿Borrar de la base de datos?")) return;
+    const { error } = await supabaseClient.from('gallery').delete().eq('id', id);
+    if(!error) await loadData();
+  };
+
+  // 6. Galería - Subir
   document.getElementById('confirmUploadBtn').addEventListener('click', async () => {
     if(!state.pendingFile) return;
-    
     const btn = document.getElementById('confirmUploadBtn');
-    const originalText = btn.textContent;
-    btn.textContent = "Subiendo...";
-    btn.disabled = true;
+    btn.textContent = "Subiendo..."; btn.disabled = true;
 
     try {
       const fd = new FormData();
       fd.append("file", state.pendingFile);
       fd.append("upload_preset", CONFIG.uploadPreset);
-
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${CONFIG.cloudName}/upload`, {
-        method: "POST", body: fd
-      });
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CONFIG.cloudName}/upload`, { method: "POST", body: fd });
       const data = await res.json();
 
       if(data.secure_url){
         const type = (data.resource_type === 'video' || (data.format && ['mp4','webm'].includes(data.format))) ? 'video' : 'image';
-        const newItem = { 
-            id: data.public_id || ("id_"+Date.now()), 
-            url: data.secure_url, 
-            type: type, 
-            title: els.mediaTitleInput.value || (type === 'video' ? 'Clip de Baile' : 'Captura de Evento')
-        };
-        state.items.push(newItem);
-        saveData();
-        renderGallery();
-        alert("Archivo subido correctamente ✅");
-      } else {
-        alert("Error al subir. Revisa la consola.");
-        console.error("Upload response:", data);
+        const { error } = await supabaseClient.from('gallery').insert([{
+            url: data.secure_url,
+            type: type,
+            title: els.mediaTitleInput.value || (type === 'video' ? 'Clip VIP' : 'Foto VIP'),
+            public_id: data.public_id
+        }]);
+        if(!error) { alert("¡Publicado! ☁️"); await loadData(); }
       }
-    } catch(err) {
-      console.error("Upload error:", err);
-      alert("Error al subir (ver consola).");
-    } finally {
-      btn.textContent = originalText;
-      btn.disabled = false;
-      els.uploadModal.style.display = 'none';
-      state.pendingFile = null; 
-      els.fileInput.value = "";
+    } catch(err) { console.error(err); alert("Error."); } 
+    finally {
+      btn.textContent = "Publicar"; btn.disabled = false;
+      els.uploadModal.style.display = 'none'; state.pendingFile = null; els.fileInput.value = "";
     }
   });
 
-  // --- UI EVENTS & LOGIN ---
-  document.getElementById('adminToggle').addEventListener('click', () => {
-      els.loginModal.style.display = 'flex';
-      els.adminPassInput.focus();
-  });
-
-  document.getElementById('doLoginBtn').addEventListener('click', () => {
-      if(els.adminPassInput.value === CONFIG.adminPass){
-        state.isAdmin = true;
-        els.adminControls.classList.remove('hidden');
-        els.loginModal.style.display = 'none';
-        renderGallery(); 
-        alert("Bienvenido, Administrador.");
-      } else {
-        alert("Acceso denegado.");
-      }
-      els.adminPassInput.value = "";
-  });
-
-  document.getElementById('closeLoginBtn').onclick = () => {
-      els.loginModal.style.display = 'none';
-      els.adminPassInput.value = "";
+  // --- UI HELPERS ---
+  function updateStats(){
+    const imgs = state.items.filter(i => i.type !== 'video').length;
+    const vids = state.items.filter(i => i.type === 'video').length;
+    els.stats.textContent = `${imgs} Capturas · ${vids} Clips`;
   }
-  document.getElementById('cancelUploadBtn').onclick = () => {
-    els.uploadModal.style.display = 'none';
-    state.pendingFile = null;
-    els.fileInput.value = "";
-  };
-  document.getElementById('uploadTriggerBtn').onclick = () => els.fileInput.click();
   
-  // Mobile Menu
-  els.mobileMenuBtn.addEventListener('click', () => {
-    els.mainNav.classList.toggle('open');
-  });
+  window.viewItem = function(url, type){
+    const overlay = document.createElement('div');
+    overlay.style = "position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;";
+    const content = type === 'video' ? `<video src="${url}" controls autoplay style="max-width:100%;max-height:90vh;border-radius:8px;"></video>` : `<img src="${url}" style="max-width:100%;max-height:90vh;border-radius:8px;">`;
+    overlay.innerHTML = `<div style="position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">${content}<button id="closeLightbox" style="position:absolute; top:20px; right:20px; background:none; border:0; color:white; font-size:30px; cursor:pointer;">&times;</button></div>`;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#closeLightbox').onclick = () => overlay.remove();
+  };
 
-  // Scroll Animation Observer
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        entry.target.classList.add('visible');
-      }
+  window.editMemberBadges = function(name) { 
+    els.memberUsernameInput.value = name; 
+    displayCurrentBadges(name); 
+  };
+
+  function populateBadgeSelect() {
+    const select = els.memberBadgeSelect;
+    select.innerHTML = '<option value="">(Seleccionar Insignia)</option>';
+    Object.keys(BADGE_DATA).forEach(key => {
+      const data = BADGE_DATA[key];
+      const option = document.createElement('option');
+      option.value = key; 
+      option.textContent = `${data.icon} ${data.name}`;
+      select.appendChild(option);
     });
+  }
+
+  // --- EVENTOS ---
+  els.manageLogoBtn.onclick = () => { els.newLogoUrlInput.value = state.logoUrl; els.logoModal.style.display = 'flex'; };
+  document.getElementById('closeLogoBtn').onclick = () => els.logoModal.style.display = 'none';
+  
+  els.manageBadgesBtn.onclick = () => { populateBadgeSelect(); renderRankedMemberList(); els.badgesModal.style.display = 'flex'; };
+  document.getElementById('closeBadgesBtn').onclick = () => els.badgesModal.style.display = 'none';
+  
+  els.memberUsernameInput.oninput = () => displayCurrentBadges(els.memberUsernameInput.value.trim());
+  els.memberBadgeSelect.onchange = () => displayCurrentBadges(els.memberUsernameInput.value.trim());
+  
+  document.getElementById('adminToggle').onclick = () => { els.loginModal.style.display = 'flex'; els.adminPassInput.focus(); };
+  document.getElementById('closeLoginBtn').onclick = () => els.loginModal.style.display = 'none';
+  
+  document.getElementById('doLoginBtn').onclick = () => {
+    if(els.adminPassInput.value === CONFIG.adminPass){
+      state.isAdmin = true; els.adminControls.classList.remove('hidden'); els.loginModal.style.display = 'none'; renderGallery(); alert("✅ Admin activo.");
+    } else alert("❌ Acceso denegado.");
+    els.adminPassInput.value = "";
+  };
+
+  document.getElementById('uploadTriggerBtn').onclick = () => els.fileInput.click();
+  document.getElementById('cancelUploadBtn').onclick = () => { els.uploadModal.style.display = 'none'; state.pendingFile = null; els.fileInput.value = ""; };
+  els.fileInput.onchange = (e) => { if(e.target.files[0]){ state.pendingFile = e.target.files[0]; els.mediaTitleInput.value = ""; els.uploadModal.style.display = 'flex'; } };
+  els.mobileMenuBtn.onclick = () => els.mainNav.classList.toggle('open');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
   }, { threshold: 0.1 });
-
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-  // Init
+  
   loadData();
-
-})();
+});  
 </script>
 </body>
 </html>
